@@ -15,13 +15,13 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="container navbar-container">
-        <Link href="/" className="logo-link">
-          <Image src="/logo.png" alt="Janani Home Foods Logo" width={180} height={70} className="logo-img" />
-        </Link>
-        
         <button className="mobile-menu-btn" onClick={toggleMenu} aria-label="Toggle menu">
           {isMenuOpen ? '✕' : '☰'}
         </button>
+
+        <Link href="/" className="logo-link">
+          <Image src="/logo.png" alt="Janani Home Foods Logo" width={180} height={70} className="logo-img" />
+        </Link>
 
         <div className={`nav-links ${isMenuOpen ? 'nav-links-open' : ''}`}>
           <Link href="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>Home</Link>
@@ -34,7 +34,7 @@ export default function Navbar() {
         <div className="nav-actions">
           <button className="icon-btn" aria-label="Search">🔍</button>
           <button className="icon-btn" aria-label="Account">👤</button>
-          <button className="icon-btn" aria-label="Cart">🛒 (0)</button>
+          <button className="icon-btn" aria-label="Cart">🛒 <span>(0)</span></button>
         </div>
       </div>
     </nav>

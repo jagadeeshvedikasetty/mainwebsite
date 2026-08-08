@@ -4,6 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import RainAnimation from "../components/Rain";
 import Navbar from "../components/Navbar";
+import PromoBar from "../components/PromoBar";
+import BottomNav from "../components/BottomNav";
+import FloatingActions from "../components/FloatingActions";
 
 export const metadata: Metadata = {
   title: "Janani Home Foods - Authentic Indian Sweets & Pickles",
@@ -19,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <RainAnimation />
+        <PromoBar />
         <Navbar />
         {children}
         
@@ -47,6 +51,8 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        <BottomNav />
+        <FloatingActions />
       </body>
     </html>
   );

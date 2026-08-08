@@ -62,9 +62,29 @@ function ShopContent() {
                 className="product-card animate-fade-in" 
                 style={{ animationDelay: `${0.1 + (idx % 10) * 0.1}s` }}
               >
-                <div className="product-image-container">
+                <div 
+                  className="product-image-container"
+                  onMouseEnter={(e) => {
+                    const video = e.currentTarget.querySelector('video');
+                    if (video) video.play();
+                  }}
+                  onMouseLeave={(e) => {
+                    const video = e.currentTarget.querySelector('video');
+                    if (video) {
+                      video.pause();
+                      video.currentTime = 0;
+                    }
+                  }}
+                >
                   <Image src="/product.png" alt={product.name} fill className="product-image" />
-                  <Image src="/product-hover.png" alt={product.name} fill className="product-image-hover" />
+                  <video 
+                    src="/product-hover.mp4" 
+                    className="product-image-hover" 
+                    muted 
+                    loop 
+                    playsInline 
+                    style={{ objectFit: 'cover' }}
+                  />
                   <div className="quick-shop-btn">Quick Shop</div>
                 </div>
                 <div className="product-info">

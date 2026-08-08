@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import CategoryScroll from "../components/CategoryScroll";
 
 export default function Home() {
   return (
     <main>
+      <CategoryScroll />
       <section className="hero">
         <Image src="/hero.png" alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" />
         <div className="hero-content animate-fade-in">
@@ -23,9 +27,29 @@ export default function Home() {
           <div className="products-grid">
             {/* Sample Best Sellers */}
             <div className="product-card animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              <div className="product-image-container">
+              <div 
+                className="product-image-container"
+                onMouseEnter={(e) => {
+                  const video = e.currentTarget.querySelector('video');
+                  if (video) video.play();
+                }}
+                onMouseLeave={(e) => {
+                  const video = e.currentTarget.querySelector('video');
+                  if (video) {
+                    video.pause();
+                    video.currentTime = 0;
+                  }
+                }}
+              >
                 <Image src="/product.png" alt="Bellam Boondi Laddu" fill className="product-image" />
-                <Image src="/product-hover.png" alt="Bellam Boondi Laddu" fill className="product-image-hover" />
+                <video 
+                  src="/product-hover.mp4" 
+                  className="product-image-hover" 
+                  muted 
+                  loop 
+                  playsInline 
+                  style={{ objectFit: 'cover' }}
+                />
                 <div className="quick-shop-btn">Quick Shop</div>
               </div>
               <div className="product-info">
@@ -36,9 +60,29 @@ export default function Home() {
             </div>
 
             <div className="product-card animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <div className="product-image-container">
+              <div 
+                className="product-image-container"
+                onMouseEnter={(e) => {
+                  const video = e.currentTarget.querySelector('video');
+                  if (video) video.play();
+                }}
+                onMouseLeave={(e) => {
+                  const video = e.currentTarget.querySelector('video');
+                  if (video) {
+                    video.pause();
+                    video.currentTime = 0;
+                  }
+                }}
+              >
                 <Image src="/product.png" alt="Avakaaya Pickle" fill className="product-image" />
-                <Image src="/product-hover.png" alt="Avakaaya Pickle" fill className="product-image-hover" />
+                <video 
+                  src="/product-hover.mp4" 
+                  className="product-image-hover" 
+                  muted 
+                  loop 
+                  playsInline 
+                  style={{ objectFit: 'cover' }}
+                />
                 <div className="quick-shop-btn">Quick Shop</div>
               </div>
               <div className="product-info">
@@ -48,10 +92,31 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="product-card animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <div 
+                className="product-card animate-fade-in" 
+                style={{ animationDelay: '0.3s' }}
+                onMouseEnter={(e) => {
+                  const video = e.currentTarget.querySelector('video');
+                  if (video) video.play();
+                }}
+                onMouseLeave={(e) => {
+                  const video = e.currentTarget.querySelector('video');
+                  if (video) {
+                    video.pause();
+                    video.currentTime = 0;
+                  }
+                }}
+              >
               <div className="product-image-container">
                 <Image src="/product.png" alt="Palli Chekkalu" fill className="product-image" />
-                <Image src="/product-hover.png" alt="Palli Chekkalu" fill className="product-image-hover" />
+                <video 
+                  src="/product-hover.mp4" 
+                  className="product-image-hover" 
+                  muted 
+                  loop 
+                  playsInline 
+                  style={{ objectFit: 'cover' }}
+                />
                 <div className="quick-shop-btn">Quick Shop</div>
               </div>
               <div className="product-info">
@@ -61,10 +126,31 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="product-card animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            <div 
+                className="product-card animate-fade-in" 
+                style={{ animationDelay: '0.4s' }}
+                onMouseEnter={(e) => {
+                  const video = e.currentTarget.querySelector('video');
+                  if (video) video.play();
+                }}
+                onMouseLeave={(e) => {
+                  const video = e.currentTarget.querySelector('video');
+                  if (video) {
+                    video.pause();
+                    video.currentTime = 0;
+                  }
+                }}
+              >
               <div className="product-image-container">
                 <Image src="/product.png" alt="Kharjoora Nuvvula Laddu" fill className="product-image" />
-                <Image src="/product-hover.png" alt="Kharjoora Nuvvula Laddu" fill className="product-image-hover" />
+                <video 
+                  src="/product-hover.mp4" 
+                  className="product-image-hover" 
+                  muted 
+                  loop 
+                  playsInline 
+                  style={{ objectFit: 'cover' }}
+                />
                 <div className="quick-shop-btn">Quick Shop</div>
               </div>
               <div className="product-info">
@@ -78,6 +164,26 @@ export default function Home() {
           <div style={{ textAlign: 'center', marginTop: '50px' }}>
             <Link href="/shop" className="btn btn-outline">View All Products</Link>
           </div>
+        </div>
+      </section>
+
+      {/* Cinematic Video Section */}
+      <section className="video-section">
+        <iframe 
+          className="video-background"
+          src="https://www.youtube.com/embed/QtHsh_5Czh4?autoplay=1&mute=1&loop=1&playlist=QtHsh_5Czh4&controls=0&showinfo=0&autohide=1&modestbranding=1" 
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          style={{ pointerEvents: 'none', transform: 'scale(1.5)' }}
+        ></iframe>
+        <div className="video-overlay-content animate-fade-in">
+          <h2 className="font-traditional">The Taste of Home</h2>
+          <p>
+            For 27 years, we have been crafting authentic South Indian delicacies 
+            using traditional methods, ensuring the highest standards of hygiene and 
+            that true homemade taste in every single bite.
+          </p>
         </div>
       </section>
 

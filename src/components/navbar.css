@@ -17,10 +17,18 @@
 @media (max-width: 768px) {
   .mobile-menu-btn {
     display: block;
+    font-size: 2rem;
+    padding: 0;
+  }
+
+  .logo-link {
     position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .logo-img {
+    height: 50px; /* slightly smaller on mobile */
   }
 
   .nav-links {
@@ -46,6 +54,15 @@
   }
 
   .nav-actions {
-    margin-right: 50px; /* Make room for hamburger */
+    display: flex;
+    gap: 15px;
+  }
+  
+  .nav-actions .icon-btn {
+    font-size: 1.4rem;
+  }
+  
+  .nav-actions span {
+    display: none; /* Hide text like "(0)" in cart icon on mobile to save space */
   }
 }
