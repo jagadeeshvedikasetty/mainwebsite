@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/src/components/rain.module.css"],"sourcesContent":[".rainContainer {\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100vw;\r\n  height: 100vh;\r\n  overflow: hidden;\r\n  pointer-events: none;\r\n  z-index: 9999;\r\n}\r\n\r\n.drop {\r\n  position: absolute;\r\n  top: -100px;\r\n  width: 2px;\r\n  height: 80px;\r\n  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6));\r\n  animation-name: fall;\r\n  animation-timing-function: linear;\r\n  animation-iteration-count: infinite;\r\n}\r\n\r\n@keyframes fall {\r\n  to {\r\n    transform: translateY(100vh); /* Fall to bottom of the viewport/container */\r\n  }\r\n}\r\n"],"names":[],"mappings":"AAAA;;;;;;;;;;;AAWA;;;;;;;;;;;AAWA"}}]
+}

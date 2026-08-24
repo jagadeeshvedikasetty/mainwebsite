@@ -1,0 +1,20 @@
+=== JANANI HOME FOODS - PROJECT DETAILS ===
+
+1. ADMIN PANEL (Dashboard to manage products, orders, etc.)
+   - URL: http://localhost:3000
+   - Login Email: (Use the email you created in your Supabase Dashboard)
+   - Login Password: (Use the password you set in Supabase)
+   - How to start manually: 
+     cd e:\janani\admin
+     npm run dev
+
+2. CLIENT WEBSITE (Customer facing store)
+   - URL: http://localhost:3001
+   - Shop Page: http://localhost:3001/shop
+   - How to start manually: 
+     cd e:\janani\client
+     npm run dev -- -p 3001
+
+3. DATABASES & SERVICES
+   - Supabase (Database & Auth): https://supabase.com/dashboard
+   - Cloudinary (Images & Video Storage): https://cloudinary.com/console (Cloud name: dipklwvgf)
