@@ -29,6 +29,7 @@
   
   .logo-img {
     height: 50px; /* slightly smaller on mobile */
+    width: auto;
   }
 
   .nav-links {

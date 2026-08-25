@@ -20,7 +20,7 @@ export default function CategoryScroll() {
         {categories.map((cat, idx) => (
           <Link href={cat.link} key={idx} className="category-item">
             <div className="category-circle">
-              <Image src={cat.img} alt={cat.name} fill className="category-img" />
+              <Image src={cat.img} alt={cat.name} fill sizes="100px" className="category-img" />
             </div>
             <span className="category-name">{cat.name}</span>
           </Link>

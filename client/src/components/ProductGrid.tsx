@@ -36,6 +36,7 @@ export default function ProductGrid({ products }: { products: any[] }) {
                 src={product.image_url || "/product.png"} 
                 alt={product.name} 
                 fill 
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="product-image" 
                 unoptimized // Because we use external Cloudinary URLs
               />
