@@ -14,10 +14,10 @@ export default async function Home() {
   const desktopSrc = themeData?.hero_image_url || '/hero.png';
   const mobileSrc = themeData?.mobile_hero_image_url || desktopSrc;
   
-  const heroTitle = themeData?.hero_title || 'Monsoon Sale!';
-  const heroSubtitle = themeData?.hero_subtitle || 'Enjoy the cozy weather with our traditional homemade sweets and snacks. Special discounts available for a limited time!';
-  const heroButtonText = themeData?.hero_button_text || 'Shop the Sale';
-  const heroButtonLink = themeData?.hero_button_link || '/shop';
+  const heroTitle = themeData?.hero_title || '';
+  const heroSubtitle = themeData?.hero_subtitle || '';
+  const heroButtonText = themeData?.hero_button_text || '';
+  const heroButtonLink = themeData?.hero_button_link || '';
   const scaleDesktop = themeData?.hero_text_scale_desktop || 1.0;
   const scaleMobile = themeData?.hero_text_scale_mobile || 1.0;
   const xDesktop = themeData?.hero_text_x_desktop ?? 50;
