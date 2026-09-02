@@ -1,0 +1,1672 @@
+[
+  {
+    "id": 2,
+    "name": "Bellam boondi laddu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Palli pakam/chikki",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Raagi dry fruit laddu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 170
+      },
+      {
+        "weight": "500g",
+        "price": 340
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Borugula laddu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 80
+      },
+      {
+        "weight": "500g",
+        "price": 160
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Kharjoora Nuvvula laddu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 200
+      },
+      {
+        "weight": "500g",
+        "price": 400
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Pottu minapa Sunuundalu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 180
+      },
+      {
+        "weight": "500g",
+        "price": 360
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Bellam Godhuma Gavvalu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 140
+      },
+      {
+        "weight": "500g",
+        "price": 280
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Bellam boondi mithai",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Bellam jonna laddu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 170
+      },
+      {
+        "weight": "500g",
+        "price": 340
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Bellam Ravva kajjikayalu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 125
+      },
+      {
+        "weight": "500g",
+        "price": 250
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Bellam putnala kajjikayalu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 125
+      },
+      {
+        "weight": "500g",
+        "price": 250
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Bellam kobbari kajjikayalu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 140
+      },
+      {
+        "weight": "500g",
+        "price": 280
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Pumpkin chikki",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 180
+      },
+      {
+        "weight": "500g",
+        "price": 360
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Avise karjura laddu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 200
+      },
+      {
+        "weight": "500g",
+        "price": 400
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Korra ariselu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "name": "Bellam ravvaladdu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Palli nuvvula laddu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 150
+      },
+      {
+        "weight": "500g",
+        "price": 300
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "name": "Bellam sekkar paara",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 120
+      },
+      {
+        "weight": "500g",
+        "price": 240
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Nuvvula arisslu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 140
+      },
+      {
+        "weight": "500g",
+        "price": 280
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Nethi ariselu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 170
+      },
+      {
+        "weight": "500g",
+        "price": 340
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "name": "Bellam mysurpaak",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 160
+      },
+      {
+        "weight": "500g",
+        "price": 320
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "name": "Palli barfi",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "name": "Khaju barfi",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 300
+      },
+      {
+        "weight": "500g",
+        "price": 600
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "name": "Bellam mamidithandra",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 125
+      },
+      {
+        "weight": "500g",
+        "price": 250
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "name": "Bellam nuvula chikki",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 150
+      },
+      {
+        "weight": "500g",
+        "price": 300
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "name": "Dry fruit laddu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 275
+      },
+      {
+        "weight": "500g",
+        "price": 550
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "name": "Gondh laddu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "500g",
+        "price": 550
+      },
+      {
+        "weight": "1000g",
+        "price": 1100
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "name": "Dry fruit putharekulu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "5 piece box",
+        "price": 180
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "name": "Panasa thonalu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250 g",
+        "price": 130
+      },
+      {
+        "weight": "500 g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "name": "Natural honey",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "1 liter",
+        "price": 500
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "name": "Dry fruit honey",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 250
+      },
+      {
+        "weight": "500g",
+        "price": 500
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "name": "Bellam ragigavallu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 140
+      },
+      {
+        "weight": "500g",
+        "price": 180
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "name": "Nuvvula chiki",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 140
+      },
+      {
+        "weight": "500g",
+        "price": 280
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "name": "Oilgalu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "1 piece",
+        "price": 20
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "name": "Jonna pelalu laddu",
+    "category": "SWEETS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 150
+      },
+      {
+        "weight": "500g",
+        "price": 300
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "name": "Palli chekkalu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "name": "Korra chekkalu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "name": "Ragi chekkalu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "name": "Korra janthikalu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "name": "Ragi murukulu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "name": "Korra kaaram gavvalu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "name": "Arikela kaarapusa",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 140
+      },
+      {
+        "weight": "500g",
+        "price": 280
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "name": "Saama palli murukulu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 140
+      },
+      {
+        "weight": "500g",
+        "price": 280
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "name": "Pool makhana dry fruit mixture",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 500
+      },
+      {
+        "weight": "500g",
+        "price": 1000
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "name": "Beetroot chekkalu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "name": "Sajja chekkalu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "name": "Kaju masala",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 300
+      },
+      {
+        "weight": "500g",
+        "price": 600
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "name": "Borugula mixture",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 120
+      },
+      {
+        "weight": "500g",
+        "price": 240
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "name": "Cornflakes mixture",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 120
+      },
+      {
+        "weight": "500g",
+        "price": 240
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "name": "Atukula mixture",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 120
+      },
+      {
+        "weight": "500g",
+        "price": 240
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "name": "Boondi kaara",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 110
+      },
+      {
+        "weight": "500g",
+        "price": 220
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "name": "Korra chitti janthikalu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "name": "Vaam karalu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "name": "Peppar karalu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "name": "Chegodilu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "name": "Tomoto chips",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "name": "Vamu karalu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "name": "Pepper karalu",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "name": "Ragibundi Kara",
+    "category": "SNACKS",
+    "variants": [
+      {
+        "weight": "250 g",
+        "price": 130
+      },
+      {
+        "weight": "500 g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "name": "Kakara pickle",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 135
+      },
+      {
+        "weight": "500g",
+        "price": 270
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "name": "Dried tomato pickle",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 135
+      },
+      {
+        "weight": "500g",
+        "price": 270
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "name": "Lemon pachimirchi",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "name": "Cut mongo",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 135
+      },
+      {
+        "weight": "500g",
+        "price": 270
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "name": "Gongura pickle",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 150
+      },
+      {
+        "weight": "500g",
+        "price": 300
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "name": "Pandu mirapa",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 135
+      },
+      {
+        "weight": "500g",
+        "price": 270
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "name": "Allam  pickle",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 135
+      },
+      {
+        "weight": "500g",
+        "price": 270
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "name": "Avakaaya pickle",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 135
+      },
+      {
+        "weight": "500g",
+        "price": 270
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "name": "Sanagala aavakaya",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "500g",
+        "price": 320
+      },
+      {
+        "weight": "1kg",
+        "price": 640
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "name": "Peasara aavakaya",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "500g",
+        "price": 320
+      },
+      {
+        "weight": "1kg",
+        "price": 640
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "name": "Bellam aavakaya",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 135
+      },
+      {
+        "weight": "500g",
+        "price": 270
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "name": "Nuvvula aavakaya",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 160
+      },
+      {
+        "weight": "500g",
+        "price": 320
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "name": "Nalleru pachadi",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 190
+      },
+      {
+        "weight": "500g",
+        "price": 380
+      },
+      {
+        "weight": "1kg",
+        "price": 760
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "name": "Gongura Pandu Meerapa pachadi",
+    "category": "PICKLES",
+    "variants": []
+  },
+  {
+    "id": 75,
+    "name": "250g 150",
+    "category": "PICKLES",
+    "variants": []
+  },
+  {
+    "id": 76,
+    "name": "500g Rs 300",
+    "category": "PICKLES",
+    "variants": [
+      {
+        "weight": "1kg",
+        "price": 600
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "name": "Usri thokku pachadi",
+    "category": "PICKLES",
+    "variants": []
+  },
+  {
+    "id": 78,
+    "name": "1kg Rs 540",
+    "category": "PICKLES",
+    "variants": []
+  },
+  {
+    "id": 80,
+    "name": "Chitti Royyalu",
+    "category": "NON-VEG PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 500
+      },
+      {
+        "weight": "500g",
+        "price": 1000
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "name": "Chicken gongura",
+    "category": "NON-VEG PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 285
+      },
+      {
+        "weight": "500g",
+        "price": 570
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "name": "Bonles chicken",
+    "category": "NON-VEG PICKLES",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 300
+      },
+      {
+        "weight": "500g",
+        "price": 600
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "name": "Natukodi pickle(on order)",
+    "category": "NON-VEG PICKLES",
+    "variants": [
+      {
+        "weight": "500g",
+        "price": 1000
+      },
+      {
+        "weight": "1kg",
+        "price": 2000
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "name": "Mutton pickle(on order)",
+    "category": "NON-VEG PICKLES",
+    "variants": [
+      {
+        "weight": "500g",
+        "price": 1000
+      },
+      {
+        "weight": "1kg",
+        "price": 2000
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "name": "Kakarakaya podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 225
+      },
+      {
+        "weight": "500g",
+        "price": 450
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "name": "Avise podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 225
+      },
+      {
+        "weight": "500g",
+        "price": 450
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "name": "Vellulli karam",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 200
+      },
+      {
+        "weight": "500g",
+        "price": 400
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "name": "Karivepaku podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 225
+      },
+      {
+        "weight": "500g",
+        "price": 450
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "name": "Munagaku podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 225
+      },
+      {
+        "weight": "500g",
+        "price": 450
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "name": "Palli podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 200
+      },
+      {
+        "weight": "500g",
+        "price": 400
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "name": "Kobberapodi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 200
+      },
+      {
+        "weight": "500g",
+        "price": 400
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "name": "Nallakaram podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 200
+      },
+      {
+        "weight": "500g",
+        "price": 400
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "name": "Pulihora ready mix podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "name": "Pulihora paste",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 125
+      },
+      {
+        "weight": "500g",
+        "price": 250
+      }
+    ]
+  },
+  {
+    "id": 95,
+    "name": "Sambaar podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 150
+      },
+      {
+        "weight": "500g",
+        "price": 300
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "name": "Rasam podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 150
+      },
+      {
+        "weight": "500g",
+        "price": 300
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "name": "Garam masala",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 250
+      },
+      {
+        "weight": "500g",
+        "price": 500
+      }
+    ]
+  },
+  {
+    "id": 98,
+    "name": "Karam podi/Red chilli",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 125
+      },
+      {
+        "weight": "500g",
+        "price": 250
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "name": "Dhaniya podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 100
+      },
+      {
+        "weight": "500g",
+        "price": 200
+      }
+    ]
+  },
+  {
+    "id": 100,
+    "name": "Pasupu podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 110
+      },
+      {
+        "weight": "500g",
+        "price": 220
+      }
+    ]
+  },
+  {
+    "id": 101,
+    "name": "Ragi malt",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 130
+      },
+      {
+        "weight": "500g",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "name": "Chinthaku podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 225
+      },
+      {
+        "weight": "500g",
+        "price": 450
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "name": "Nalleru podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 250
+      },
+      {
+        "weight": "500g",
+        "price": 500
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "name": "Chitlam podi",
+    "category": "PODULU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 200
+      },
+      {
+        "weight": "500g",
+        "price": 400
+      }
+    ]
+  },
+  {
+    "id": 105,
+    "name": "Ragi vadiyalu",
+    "category": "VADIYALU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 110
+      },
+      {
+        "weight": "500g",
+        "price": 220
+      }
+    ]
+  },
+  {
+    "id": 106,
+    "name": "Jonna vadiyalu",
+    "category": "VADIYALU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 110
+      },
+      {
+        "weight": "500g",
+        "price": 220
+      }
+    ]
+  },
+  {
+    "id": 107,
+    "name": "Biyyam vadiyalu",
+    "category": "VADIYALU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 100
+      },
+      {
+        "weight": "500g",
+        "price": 200
+      }
+    ]
+  },
+  {
+    "id": 108,
+    "name": "Gummadi vadiyalu",
+    "category": "VADIYALU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 170
+      },
+      {
+        "weight": "500g",
+        "price": 340
+      }
+    ]
+  },
+  {
+    "id": 109,
+    "name": "Majjiga mirapakayalu",
+    "category": "VADIYALU",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 225
+      },
+      {
+        "weight": "500g",
+        "price": 450
+      }
+    ]
+  },
+  {
+    "id": 110,
+    "name": "Coconut oil",
+    "category": "OILS",
+    "variants": [
+      {
+        "weight": "1 liter",
+        "price": 560
+      }
+    ]
+  },
+  {
+    "id": 111,
+    "name": "Kusuma oil",
+    "category": "OILS",
+    "variants": [
+      {
+        "weight": "1 liter",
+        "price": 440
+      }
+    ]
+  },
+  {
+    "id": 112,
+    "name": "Sesame oil",
+    "category": "OILS",
+    "variants": [
+      {
+        "weight": "1 liter",
+        "price": 470
+      }
+    ]
+  },
+  {
+    "id": 113,
+    "name": "Ground nut oil",
+    "category": "OILS",
+    "variants": [
+      {
+        "weight": "1 liter",
+        "price": 310
+      }
+    ]
+  },
+  {
+    "id": 114,
+    "name": "Amudhamu",
+    "category": "OILS",
+    "variants": []
+  },
+  {
+    "id": 115,
+    "name": "1kg Rs 300",
+    "category": "OILS",
+    "variants": []
+  },
+  {
+    "id": 116,
+    "name": "Moringa Powder",
+    "category": "HEALTH ORGANIC POWDER",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 237
+      },
+      {
+        "weight": "500g",
+        "price": 475
+      },
+      {
+        "weight": "1kg",
+        "price": 950
+      }
+    ]
+  },
+  {
+    "id": 117,
+    "name": "Amala powder",
+    "category": "HEALTH ORGANIC POWDER",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 412
+      },
+      {
+        "weight": "500g",
+        "price": 825
+      },
+      {
+        "weight": "1kg",
+        "price": 1650
+      }
+    ]
+  },
+  {
+    "id": 118,
+    "name": "Beetroot powder",
+    "category": "HEALTH ORGANIC POWDER",
+    "variants": [
+      {
+        "weight": "250g",
+        "price": 412
+      },
+      {
+        "weight": "500g",
+        "price": 825
+      },
+      {
+        "weight": "1kg",
+        "price": 1650
+      }
+    ]
+  }
+]
