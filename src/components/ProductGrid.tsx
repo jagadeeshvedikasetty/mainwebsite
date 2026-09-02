@@ -41,7 +41,7 @@ export default function ProductGrid({ products }: { products: any[] }) {
                 unoptimized // Because we use external Cloudinary URLs
               />
               
-              {product.video_url ? (
+              {product.video_url && (
                 <video 
                   src={product.video_url} 
                   className="product-image-hover" 

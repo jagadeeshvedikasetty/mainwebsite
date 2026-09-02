@@ -92,7 +92,7 @@ function ShopContent() {
                     className="product-image" 
                     unoptimized 
                   />
-                  {product.video_url ? (
+                  {product.video_url && (
                     <video 
                       src={product.video_url} 
                       className="product-image-hover" 
