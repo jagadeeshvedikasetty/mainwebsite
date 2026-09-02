@@ -12,16 +12,21 @@ export default async function Home() {
   const { data: themeData } = await supabase.from('themes').select('*').eq('id', 'active_theme').maybeSingle();
   const desktopSrc = themeData?.hero_image_url || '/hero.png';
   const mobileSrc = themeData?.mobile_hero_image_url || desktopSrc;
+  
+  const desktopHeight = themeData?.hero_desktop_height ?? 100;
+  const mobileHeight = themeData?.hero_mobile_height ?? 60;
+  const desktopPos = themeData?.hero_desktop_position ?? 'center';
+  const mobilePos = themeData?.hero_mobile_position ?? 'center';
 
   return (
     <main>
       <CategoryScroll />
       <section className="hero">
-        <div className="hero-bg-desktop">
-          <Image src={desktopSrc} alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" unoptimized={desktopSrc.startsWith('http')} />
+        <div className="hero-bg-desktop" style={{ height: `${desktopHeight}vh` }}>
+          <Image src={desktopSrc} alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" unoptimized={desktopSrc.startsWith('http')} style={{ objectFit: 'cover', objectPosition: desktopPos }} />
         </div>
-        <div className="hero-bg-mobile">
-          <Image src={mobileSrc} alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" unoptimized={mobileSrc.startsWith('http')} />
+        <div className="hero-bg-mobile" style={{ height: `${mobileHeight}vh` }}>
+          <Image src={mobileSrc} alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" unoptimized={mobileSrc.startsWith('http')} style={{ objectFit: 'cover', objectPosition: mobilePos }} />
         </div>
       </section>
 
