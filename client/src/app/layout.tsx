@@ -1,17 +1,25 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
-import RainAnimation from "../components/Rain";
 import Navbar from "../components/Navbar";
 import PromoBar from "../components/PromoBar";
 import BottomNav from "../components/BottomNav";
 import FloatingActions from "../components/FloatingActions";
 import DecorationOverlay from "../components/DecorationOverlay";
+import ThemeProvider from "../components/ThemeProvider";
+import EffectsOverlay from "../components/EffectsOverlay";
 
 export const metadata: Metadata = {
   title: "Janani Home Foods - Authentic Indian Sweets & Pickles",
   description: "Authentic Indian Home Foods, Sweets, Snacks, and Pickles since 1997",
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -22,9 +30,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <RainAnimation />
-        <DecorationOverlay />
-        <PromoBar />
+        <ThemeProvider>
+          <PromoBar />
         <Navbar />
         {children}
         
@@ -53,8 +60,10 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
-        <BottomNav />
+        </ThemeProvider>
         <FloatingActions />
+        <EffectsOverlay />
+        <DecorationOverlay />
       </body>
     </html>
   );

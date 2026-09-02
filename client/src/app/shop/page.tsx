@@ -48,7 +48,7 @@ function ShopContent() {
 
   return (
     <main>
-      <section className="section bg-light">
+      <section className="section" style={{ background: 'transparent' }}>
         <div className="container">
           <h1 className="section-title font-traditional animate-slide-in">Our Menu</h1>
           

@@ -2,27 +2,60 @@ import Link from "next/link";
 import Image from "next/image";
 import CategoryScroll from "../components/CategoryScroll";
 import ProductGrid from "../components/ProductGrid";
+import DecorationOverlay from '../components/DecorationOverlay';
+import DraggableHeroText from '../components/DraggableHeroText';
 import { supabase } from "../utils/supabase";
 
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const { data: products } = await supabase.from('products').select('*').limit(8);
+  const { data: themeData } = await supabase.from('themes').select('*').eq('id', 'active_theme').maybeSingle();
+  const desktopSrc = themeData?.hero_image_url || '/hero.png';
+  const mobileSrc = themeData?.mobile_hero_image_url || desktopSrc;
+  
+  const heroTitle = themeData?.hero_title || 'Monsoon Sale!';
+  const heroSubtitle = themeData?.hero_subtitle || 'Enjoy the cozy weather with our traditional homemade sweets and snacks. Special discounts available for a limited time!';
+  const heroButtonText = themeData?.hero_button_text || 'Shop the Sale';
+  const heroButtonLink = themeData?.hero_button_link || '/shop';
+  const scaleDesktop = themeData?.hero_text_scale_desktop || 1.0;
+  const scaleMobile = themeData?.hero_text_scale_mobile || 1.0;
+  const xDesktop = themeData?.hero_text_x_desktop ?? 50;
+  const yDesktop = themeData?.hero_text_y_desktop ?? 50;
+  const xMobile = themeData?.hero_text_x_mobile ?? 50;
+  const yMobile = themeData?.hero_text_y_mobile ?? 50;
+
+  const showTextDesktop = themeData?.hero_text_show_desktop ?? true;
+  const showTextMobile = themeData?.hero_text_show_mobile ?? true;
+  const showButtonDesktop = themeData?.hero_button_show_desktop ?? true;
+  const showButtonMobile = themeData?.hero_button_show_mobile ?? true;
 
   return (
     <main>
       <CategoryScroll />
       <section className="hero">
-        <Image src="/hero.png" alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" />
-        <div className="hero-content animate-fade-in">
-          <h1 className="hero-title font-traditional">Monsoon Sale!</h1>
-          <p style={{ fontSize: '1.2rem', marginBottom: '30px', fontWeight: 300, textShadow: '1px 1px 4px rgba(0,0,0,0.8)' }}>
-            Enjoy the cozy weather with our traditional homemade sweets and snacks. Special discounts available for a limited time!
-          </p>
-          <Link href="/shop" className="btn btn-primary" style={{ fontSize: '1.1rem', padding: '15px 40px' }}>
-            Shop the Sale
-          </Link>
+        <div className="hero-bg-desktop">
+          <Image src={desktopSrc} alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" unoptimized={desktopSrc.startsWith('http')} />
         </div>
+        <div className="hero-bg-mobile">
+          <Image src={mobileSrc} alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" unoptimized={mobileSrc.startsWith('http')} />
+        </div>
+        <DraggableHeroText 
+          title={heroTitle}
+          subtitle={heroSubtitle}
+          buttonText={heroButtonText}
+          buttonLink={heroButtonLink}
+          scaleDesktop={scaleDesktop}
+          scaleMobile={scaleMobile}
+          xDesktop={xDesktop}
+          yDesktop={yDesktop}
+          xMobile={xMobile}
+          yMobile={yMobile}
+          showTextDesktop={showTextDesktop}
+          showTextMobile={showTextMobile}
+          showButtonDesktop={showButtonDesktop}
+          showButtonMobile={showButtonMobile}
+        />
       </section>
 
       <section id="featured" className="section">
@@ -57,7 +90,7 @@ export default async function Home() {
       </section>
 
       {/* Our Collections Section equivalent */}
-      <section className="section" style={{ backgroundColor: 'white' }}>
+      <section className="section">
         <div className="container">
           <h2 className="section-title font-traditional">Our Collections</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>

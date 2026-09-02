@@ -1,19 +1,21 @@
 === JANANI HOME FOODS - PROJECT DETAILS ===
 
 1. ADMIN PANEL (Dashboard to manage products, orders, etc.)
-   - URL: http://localhost:3000
+   - Desktop URL: http://localhost:3001
+   - Mobile URL: http://192.168.0.114:3001 (Ensure phone is on same Wi-Fi)
    - Login Email: (Use the email you created in your Supabase Dashboard)
    - Login Password: (Use the password you set in Supabase)
    - How to start manually: 
      cd e:\janani\admin
-     npm run dev
+     npm run dev -- -H 0.0.0.0 -p 3001
 
 2. CLIENT WEBSITE (Customer facing store)
-   - URL: http://localhost:3001
-   - Shop Page: http://localhost:3001/shop
+   - Desktop URL: http://localhost:3000
+   - Mobile URL: http://192.168.0.114:3000 (Ensure phone is on same Wi-Fi)
+   - Shop Page: http://localhost:3000/shop
    - How to start manually: 
      cd e:\janani\client
-     npm run dev -- -p 3001
+     npm run dev -- -H 0.0.0.0
 
 3. DATABASES & SERVICES
    - Supabase (Database & Auth): https://supabase.com/dashboard

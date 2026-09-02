@@ -16,7 +16,8 @@ export default function PromoBar() {
       alignItems: 'center',
       gap: '10px',
       position: 'relative',
-      zIndex: 1001
+      zIndex: 6,
+      borderBottom: '4px solid var(--secondary-color, transparent)'
     }}>
       <span>🎉</span>
       <Link href="/shop" style={{ color: 'white', textDecoration: 'none' }}>

@@ -1,0 +1,191 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]: 🎉
+    - 'link "Newly launched: Maha Combo Pack. Click to Order Now!" [ref=e4] [cursor=pointer]':
+      - /url: /shop
+  - navigation [ref=e5]:
+    - generic [ref=e6]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: /
+        - img "Janani Home Foods Logo" [ref=e8]
+      - generic [ref=e9]:
+        - link "Home" [ref=e10] [cursor=pointer]:
+          - /url: /
+        - link "Best Sellers" [ref=e11] [cursor=pointer]:
+          - /url: /shop
+        - link "Sweets" [ref=e12] [cursor=pointer]:
+          - /url: /shop?category=SWEETS
+        - link "Pickles" [ref=e13] [cursor=pointer]:
+          - /url: /shop?category=PICKLES
+        - link "All Collections" [ref=e14] [cursor=pointer]:
+          - /url: /shop
+      - generic [ref=e15]:
+        - button "Search" [ref=e16] [cursor=pointer]: 🔍
+        - button "Account" [ref=e17] [cursor=pointer]: 👤
+        - button "Cart" [ref=e18] [cursor=pointer]: 🛒 (0)
+  - main [ref=e19]:
+    - generic [ref=e20]:
+      - img "Janani Home Foods Traditional Sweets" [ref=e21]
+      - generic [ref=e22]:
+        - heading "Monsoon Sale!" [level=1] [ref=e23]
+        - paragraph [ref=e24]: Enjoy the cozy weather with our traditional homemade sweets and snacks. Special discounts available for a limited time!
+        - link "Shop the Sale" [ref=e25] [cursor=pointer]:
+          - /url: /shop
+    - generic [ref=e27]:
+      - heading "Our Best Sellers" [level=2] [ref=e28]
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]:
+            - img "Palli pakam/chikki" [ref=e32]
+            - generic [ref=e34] [cursor=pointer]: Quick Shop
+          - generic [ref=e35]:
+            - generic [ref=e36]: SWEETS
+            - heading "Palli pakam/chikki" [level=3] [ref=e37]
+            - generic [ref=e38]: From ₹130.00
+        - generic [ref=e39]:
+          - generic [ref=e40]:
+            - img "Raagi dry fruit laddu" [ref=e41]
+            - generic [ref=e43] [cursor=pointer]: Quick Shop
+          - generic [ref=e44]:
+            - generic [ref=e45]: SWEETS
+            - heading "Raagi dry fruit laddu" [level=3] [ref=e46]
+            - generic [ref=e47]: From ₹170.00
+        - generic [ref=e48]:
+          - generic [ref=e49]:
+            - img "Borugula laddu" [ref=e50]
+            - generic [ref=e52] [cursor=pointer]: Quick Shop
+          - generic [ref=e53]:
+            - generic [ref=e54]: SWEETS
+            - heading "Borugula laddu" [level=3] [ref=e55]
+            - generic [ref=e56]: From ₹80.00
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - img "Kharjoora Nuvvula laddu" [ref=e59]
+            - generic [ref=e61] [cursor=pointer]: Quick Shop
+          - generic [ref=e62]:
+            - generic [ref=e63]: SWEETS
+            - heading "Kharjoora Nuvvula laddu" [level=3] [ref=e64]
+            - generic [ref=e65]: From ₹200.00
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - img "Pottu minapa Sunuundalu" [ref=e68]
+            - generic [ref=e70] [cursor=pointer]: Quick Shop
+          - generic [ref=e71]:
+            - generic [ref=e72]: SWEETS
+            - heading "Pottu minapa Sunuundalu" [level=3] [ref=e73]
+            - generic [ref=e74]: From ₹180.00
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - img "Bellam Godhuma Gavvalu" [ref=e77]
+            - generic [ref=e79] [cursor=pointer]: Quick Shop
+          - generic [ref=e80]:
+            - generic [ref=e81]: SWEETS
+            - heading "Bellam Godhuma Gavvalu" [level=3] [ref=e82]
+            - generic [ref=e83]: From ₹140.00
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - img "Bellam boondi mithai" [ref=e86]
+            - generic [ref=e88] [cursor=pointer]: Quick Shop
+          - generic [ref=e89]:
+            - generic [ref=e90]: SWEETS
+            - heading "Bellam boondi mithai" [level=3] [ref=e91]
+            - generic [ref=e92]: From ₹130.00
+        - generic [ref=e93]:
+          - generic [ref=e94]:
+            - img "Bellam jonna laddu" [ref=e95]
+            - generic [ref=e97] [cursor=pointer]: Quick Shop
+          - generic [ref=e98]:
+            - generic [ref=e99]: SWEETS
+            - heading "Bellam jonna laddu" [level=3] [ref=e100]
+            - generic [ref=e101]: From ₹170.00
+      - link "View All Products" [ref=e103] [cursor=pointer]:
+        - /url: /shop
+    - generic [ref=e104]:
+      - iframe [ref=e105]:
+        - generic [ref=f1e1]:
+          - generic "YouTube Video Player" [ref=f1e3]
+          - generic [ref=f1e6]:
+            - generic:
+              - generic:
+                - button "Hide player controls" [ref=f1e7] [cursor=pointer]
+                - generic [ref=f1e9]:
+                  - generic:
+                    - generic [ref=f1e14]:
+                      - generic [ref=f1e15]:
+                        - 'link "ఇలా చేస్తే మోతీచూర్ లడ్డుని కేవలం 15ని''ల్లోనే చేసేయచ్చు 😋| Motichoor Laddu #laddu #shorts #trending" [ref=f1e16] [cursor=pointer]':
+                          - /url: https://www.youtube.com/watch?v=QtHsh_5Czh4
+                        - link "Seshakka's Kitchen" [ref=f1e17] [cursor=pointer]:
+                          - /url: /channel/UC3VCyJmwHG6HA2TnKd5D90w
+                      - generic [ref=f1e19]:
+                        - button [ref=f1e20] [cursor=pointer]
+                        - generic [ref=f1e22]:
+                          - generic: Seshakka's Kitchen
+                          - generic: 250K subscribers
+                    - generic [ref=f1e24]:
+                      - button "Previous video" [ref=f1e26] [cursor=pointer]
+                      - button "Rewind 10 seconds" [ref=f1e29] [cursor=pointer]
+                      - button "Pause video" [ref=f1e31] [cursor=pointer]
+                      - button "Fast forward 10 seconds" [ref=f1e35] [cursor=pointer]
+                      - button "Next video" [disabled] [ref=f1e37] [cursor=pointer]
+                  - generic [ref=f1e40]:
+                    - button "Share" [ref=f1e43] [cursor=pointer]
+                    - link "Watch on YouTube" [ref=f1e54] [cursor=pointer]:
+                      - /url: https://www.youtube.com/watch?v=QtHsh_5Czh4
+      - generic [ref=e106]:
+        - heading "The Taste of Home" [level=2] [ref=e107]
+        - paragraph [ref=e108]: For 27 years, we have been crafting authentic South Indian delicacies using traditional methods, ensuring the highest standards of hygiene and that true homemade taste in every single bite.
+    - generic [ref=e110]:
+      - heading "Our Collections" [level=2] [ref=e111]
+      - generic [ref=e112]:
+        - link [ref=e113] [cursor=pointer]:
+          - /url: /shop?category=SWEETS
+          - img "Sweets Collection" [ref=e115]
+          - generic [ref=e116]:
+            - heading "Sweets" [level=3] [ref=e117]
+            - text: View All →
+        - link [ref=e118] [cursor=pointer]:
+          - /url: /shop?category=SNACKS
+          - img "Snacks Collection" [ref=e120]
+          - generic [ref=e121]:
+            - heading "Snacks" [level=3] [ref=e122]
+            - text: View All →
+        - link [ref=e123] [cursor=pointer]:
+          - /url: /shop?category=PICKLES
+          - img "Pickles Collection" [ref=e125]
+          - generic [ref=e126]:
+            - heading "Pickles" [level=3] [ref=e127]
+            - text: View All →
+  - contentinfo [ref=e128]:
+    - generic [ref=e129]:
+      - generic [ref=e130]:
+        - img "Janani Home Foods" [ref=e131]
+        - paragraph [ref=e132]: Authentic taste of tradition. Handcrafted sweets, snacks, and pickles made with love.
+      - generic [ref=e133]:
+        - heading "Quick Links" [level=4] [ref=e134]
+        - list [ref=e135]:
+          - listitem [ref=e136]:
+            - link "Home" [ref=e137] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e138]:
+            - link "Shop All" [ref=e139] [cursor=pointer]:
+              - /url: /shop
+          - listitem [ref=e140]:
+            - link "About Us" [ref=e141] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e142]:
+            - link "Contact" [ref=e143] [cursor=pointer]:
+              - /url: /contact
+      - generic [ref=e144]:
+        - heading "Information" [level=4] [ref=e145]
+        - list [ref=e146]:
+          - listitem [ref=e147]:
+            - link "Shipping Policy" [ref=e148] [cursor=pointer]:
+              - /url: /shipping
+          - listitem [ref=e149]:
+            - link "Return Policy" [ref=e150] [cursor=pointer]:
+              - /url: /returns
+          - listitem [ref=e151]:
+            - link "Terms of Service" [ref=e152] [cursor=pointer]:
+              - /url: /terms
+  - button "Open Next.js Dev Tools" [ref=e158] [cursor=pointer]
+  - alert [ref=e162]

@@ -1,17 +1,18 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import Lottie from 'lottie-react'
+import { useEffect, useState, useRef } from 'react'
+import { createPortal } from 'react-dom'
+import { Lottie } from 'lottie-react'
 import { supabase } from '../utils/supabase'
 
 export const ICONS: Record<string, React.ReactNode> = {
   'kite': (
-    <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%', animation: 'sway 3s ease-in-out infinite alternate', transformOrigin: 'bottom center' }}>
+    <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%' }} overflow="visible">
       <path d="M50 10 L90 50 L50 90 L10 50 Z" fill="#ff4d4d"/>
       <path d="M50 10 L90 50 L50 50 Z" fill="#ff1a1a"/>
       <path d="M50 90 L50 10" stroke="white" strokeWidth="2"/>
       <path d="M10 50 L90 50" stroke="white" strokeWidth="2"/>
-      <style>{`@keyframes sway { 0% { transform: rotate(-10deg); } 100% { transform: rotate(10deg); } }`}</style>
+      <path d="M50 90 Q35 110 50 130 T50 170" stroke="rgba(255,255,255,0.7)" strokeWidth="3" fill="none" />
     </svg>
   ),
   'diya': (
@@ -50,65 +51,266 @@ export const ICONS: Record<string, React.ReactNode> = {
 
 export default function DecorationOverlay() {
   const [decorations, setDecorations] = useState<any[]>([])
+  const [theme, setTheme] = useState<any>(null)
   const [isStudio, setIsStudio] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const [selectedId, setSelectedId] = useState<number | null>(null)
+  const [draggingId, setDraggingId] = useState<number | null>(null)
+  
+  // Use ref to keep latest state for window event listeners without constant rebinding
+  const stateRef = useRef({ draggingId, decorations })
+  useEffect(() => {
+    stateRef.current = { draggingId, decorations }
+  }, [draggingId, decorations])
   
   useEffect(() => {
-    // Hide this overlay if we are inside the admin studio iframe
-    if (typeof window !== 'undefined' && window.location.search.includes('studio=true')) {
+    setMounted(true)
+    const urlIsStudio = typeof window !== 'undefined' && window.location.search.includes('studio=true')
+    
+    const fetchTheme = async () => {
+      const { data: themeData } = await supabase.from('themes').select('*').eq('id', 'active_theme').maybeSingle()
+      if (themeData) setTheme(themeData)
+    }
+    
+    if (urlIsStudio) {
       setIsStudio(true)
-      return
-    }
-
-    // Fetch immediately on mount
-    const fetchDecorations = async () => {
-      const { data, error } = await supabase
-        .from('floating_decorations')
-        .select('*')
-        .eq('is_active', true)
+      fetchTheme()
       
-      console.log('Polled decorations from Supabase:', data, error)
-      if (data) setDecorations(data)
+      const handleMessage = (e: MessageEvent) => {
+        if (e.data?.type === 'STUDIO_SYNC') {
+          setDecorations(e.data.decorations)
+          setSelectedId(e.data.selectedId)
+        }
+      }
+      window.addEventListener('message', handleMessage)
+      
+      // Tell parent we are ready to receive data
+      window.parent.postMessage({ type: 'STUDIO_READY' }, '*')
+      
+      return () => window.removeEventListener('message', handleMessage)
+    } else {
+      // Normal website logic
+      const fetchDecorations = async () => {
+        const { data } = await supabase.from('floating_decorations').select('*').eq('is_active', true)
+        if (data) setDecorations(data)
+        fetchTheme()
+      }
+      fetchDecorations()
+      const interval = setInterval(fetchDecorations, 2000)
+      return () => clearInterval(interval)
     }
-
-    fetchDecorations()
-
-    // Optionally set up an interval to poll for changes every 2 seconds
-    // so they don't even have to refresh the page while editing!
-    const interval = setInterval(fetchDecorations, 2000)
-    return () => clearInterval(interval)
   }, [])
 
-  if (isStudio || decorations.length === 0) return null
+  // Global pointer events for dragging
+  useEffect(() => {
+    if (!isStudio) return
+
+    const handlePointerMove = (e: PointerEvent) => {
+      const { draggingId } = stateRef.current
+      if (draggingId === null) return
+      const isMobile = window.innerWidth < 768
+      const x = Math.max(0, Math.min(100, (e.clientX / window.innerWidth) * 100))
+      const y = Math.max(0, Math.min(100, (e.clientY / window.innerHeight) * 100))
+      setDecorations(prev => prev.map(d => d.id === draggingId ? { 
+        ...d, 
+        ...(isMobile ? { mobile_x_percent: x, mobile_y_percent: y } : { x_percent: x, y_percent: y }) 
+      } : d))
+    }
+
+    const handlePointerUp = (e: PointerEvent) => {
+      const { draggingId, decorations: currentDecorations } = stateRef.current
+      if (draggingId !== null) {
+        const isMobile = window.innerWidth < 768
+        const x = Math.max(0, Math.min(100, (e.clientX / window.innerWidth) * 100))
+        const y = Math.max(0, Math.min(100, (e.clientY / window.innerHeight) * 100))
+        window.parent.postMessage({
+          type: 'STUDIO_DECORATION_UPDATED',
+          id: draggingId,
+          x_percent: x,
+          y_percent: y,
+          isMobile
+        }, '*')
+        setDraggingId(null)
+      }
+    }
+
+    window.addEventListener('pointermove', handlePointerMove)
+    window.addEventListener('pointerup', handlePointerUp)
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove)
+      window.removeEventListener('pointerup', handlePointerUp)
+    }
+  }, [isStudio])
+
+  const handlePointerDown = (id: number, e: React.PointerEvent) => {
+    if (!isStudio) return
+    e.preventDefault()
+    e.stopPropagation()
+    setDraggingId(id)
+    setSelectedId(id)
+    window.parent.postMessage({
+      type: 'STUDIO_SELECTION_CHANGED',
+      selectedId: id
+    }, '*')
+    ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
+  }
+
+  if (!mounted || decorations.length === 0) return null
+
+  // zIndex 4 puts the general decorations under the sticky navbar
+  const overlay = (
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 4 }} aria-hidden="true">
+      <style>{`
+        @media (max-width: 767px) {
+          .responsive-dec {
+            --x-pos: var(--x-mob);
+            --y-pos: var(--y-mob);
+          }
+          .hide-on-mobile {
+            display: none !important;
+          }
+        }
+        @media (min-width: 768px) {
+          .responsive-dec {
+            --x-pos: var(--x-desk);
+            --y-pos: var(--y-desk);
+          }
+          .hide-on-desktop {
+            display: none !important;
+          }
+        }
+      `}</style>
+      {decorations.filter(d => d.is_active || isStudio).map((dec) => {
+        const isSelected = isStudio && dec.id === selectedId
+        const size = (dec.size || 1) * 60
+
+        // Kites get special treatment
+        if (dec.icon_name === 'kite') {
+          return (
+            <div key={`kite-wrapper-${dec.id}`}>
+              {/* Only spawn animated kites if they are active, even in studio mode */}
+              {(dec.is_active || !isStudio) && (
+                <KiteSpawner dec={dec} density={theme?.effect_density || 1.0} />
+              )}
+              
+              {/* If in Studio mode, render a static kite icon so the user has something to drag! */}
+              {isStudio && (
+                <div
+                  className={`responsive-dec ${dec.show_on_mobile === false ? 'hide-on-mobile' : ''} ${dec.show_on_desktop === false ? 'hide-on-desktop' : ''}`}
+                  onPointerDown={(e) => handlePointerDown(dec.id, e)}
+                  style={{
+                    '--x-desk': `${dec.x_percent}%`,
+                    '--y-desk': `${dec.y_percent}%`,
+                    '--x-mob': `${dec.mobile_x_percent ?? dec.x_percent}%`,
+                    '--y-mob': `${dec.mobile_y_percent ?? dec.y_percent}%`,
+                    position: 'absolute',
+                    left: 'var(--x-pos, var(--x-desk))',
+                    top: 'var(--y-pos, var(--y-desk))',
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    transform: 'translate(-50%, -50%)',
+                    zIndex: 2147483647, // High z-index so it's always grabbable
+                    pointerEvents: 'auto',
+                    cursor: draggingId === dec.id ? 'grabbing' : 'grab',
+                    userSelect: 'none',
+                    ...(isSelected ? { outline: '2px solid #60a5fa', borderRadius: '9999px' } : {})
+                  } as React.CSSProperties}
+                >
+                  {ICONS['kite']}
+                </div>
+              )}
+            </div>
+          )
+        }
+        
+        // Standard decorations (Diyas, Mangoes, etc)
+        return (
+          <div
+            key={dec.id}
+            className={`responsive-dec ${dec.show_on_mobile === false ? 'hide-on-mobile' : ''} ${dec.show_on_desktop === false ? 'hide-on-desktop' : ''}`}
+            onPointerDown={(e) => handlePointerDown(dec.id, e)}
+            style={{
+              '--x-desk': `${dec.x_percent}%`,
+              '--y-desk': `${dec.y_percent}%`,
+              '--x-mob': `${dec.mobile_x_percent ?? dec.x_percent}%`,
+              '--y-mob': `${dec.mobile_y_percent ?? dec.y_percent}%`,
+              position: 'absolute',
+              left: 'var(--x-pos, var(--x-desk))',
+              top: 'var(--y-pos, var(--y-desk))',
+              width: `${size}px`,
+              height: `${size}px`,
+              transform: 'translate(-50%, -50%)',
+              zIndex: 4, // Behind the navbar
+              pointerEvents: isStudio ? 'auto' : 'none',
+              cursor: isStudio ? (draggingId === dec.id ? 'grabbing' : 'grab') : 'default',
+              userSelect: 'none',
+              ...(isSelected ? { outline: '2px solid #60a5fa', borderRadius: '9999px', zIndex: 2147483647 } : {})
+            } as React.CSSProperties}
+          >
+            {ICONS[dec.icon_name] ? (
+              ICONS[dec.icon_name]
+            ) : dec.icon_name.startsWith('lottie:') ? (
+              <Lottie src={JSON.parse(dec.icon_name.substring(7))} autoplay={true} loop={true} style={{ width: '100%', height: '100%' }} />
+            ) : dec.icon_name.startsWith('data:image/') ? (
+              <img src={dec.icon_name} alt="Decoration" style={{ width: '100%', height: '100%', objectFit: 'contain' }} draggable={false} />
+            ) : (
+              '🎉'
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', overflow: 'hidden', zIndex: 99999 }}>
-      {decorations.map((dec) => (
-        <div
-          key={dec.id}
-          style={{
-            position: 'absolute',
-            left: `${dec.x_percent}%`,
-            top: `${dec.y_percent}%`,
-            transform: `translate(-50%, -50%) scale(${dec.size})`,
-            width: '48px',
-            height: '48px',
-            fontSize: '48px',
-            zIndex: 99999,
-            pointerEvents: 'none',
-            userSelect: 'none'
-          }}
-        >
-          {ICONS[dec.icon_name] ? (
-            ICONS[dec.icon_name]
-          ) : dec.icon_name.startsWith('lottie:') ? (
-            <Lottie animationData={JSON.parse(dec.icon_name.substring(7))} loop={true} style={{ width: '100%', height: '100%' }} />
-          ) : dec.icon_name.startsWith('data:image/') ? (
-            <img src={dec.icon_name} alt="Decoration" style={{ width: '100%', height: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }} draggable={false} />
-          ) : (
-            '🎉'
-          )}
-        </div>
-      ))}
-    </div>
+    <>
+      <style>{`
+        @keyframes studioKiteFly {
+          0% { transform: translateY(0) rotate(-5deg); opacity: 0; }
+          10% { opacity: 1; }
+          80% { opacity: 1; }
+          100% { transform: translateY(-120vh) rotate(5deg); opacity: 0; }
+        }
+      `}</style>
+      {createPortal(overlay, document.body)}
+    </>
+  )
+}
+
+function KiteSpawner({ dec, density }: { dec: any, density: number }) {
+  const count = Math.max(1, Math.round(4 * density));
+  const size = (dec.size || 1) * 60;
+  
+  return (
+    <>
+      {Array.from({ length: count }).map((_, i) => {
+        // Spread them out horizontally around the spawner (wider spread)
+        const offsetX = (Math.random() - 0.5) * 60; 
+        const delay = -(Math.random() * 25); // Negative delay so they are visible immediately
+        const duration = 10 + Math.random() * 15; 
+        
+        return (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              left: `calc(${dec.x_percent}% + ${offsetX}vw)`,
+              top: `${dec.y_percent}%`,
+              width: `${size}px`,
+              height: `${size}px`,
+              zIndex: 2147483647, // High z-index so they fly over everything including Navbar
+              pointerEvents: 'none',
+              userSelect: 'none',
+              animation: `studioKiteFly ${duration}s linear infinite`,
+              animationDelay: `${delay}s`
+            }}
+          >
+            <div style={{ width: '100%', height: '100%', transform: `translate(-50%, -50%)` }}>
+              {ICONS['kite']}
+            </div>
+          </div>
+        )
+      })}
+    </>
   )
 }
