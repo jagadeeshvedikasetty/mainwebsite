@@ -17,16 +17,18 @@ export default async function Home() {
   const mobileHeight = themeData?.hero_mobile_height ?? 60;
   const desktopPos = themeData?.hero_desktop_position ?? 'center';
   const mobilePos = themeData?.hero_mobile_position ?? 'center';
+  const desktopZoom = themeData?.hero_desktop_zoom ?? 1.0;
+  const mobileZoom = themeData?.hero_mobile_zoom ?? 1.0;
 
   return (
     <main>
       <CategoryScroll />
       <section className="hero">
-        <div className="hero-bg-desktop" style={{ height: `${desktopHeight}vh` }}>
-          <Image src={desktopSrc} alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" unoptimized={desktopSrc.startsWith('http')} style={{ objectFit: 'cover', objectPosition: desktopPos }} />
+        <div className="hero-bg-desktop" style={{ height: `${desktopHeight}vh`, overflow: 'hidden' }}>
+          <Image src={desktopSrc} alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" unoptimized={desktopSrc.startsWith('http')} style={{ objectFit: 'cover', objectPosition: desktopPos, transform: `scale(${desktopZoom})` }} />
         </div>
-        <div className="hero-bg-mobile" style={{ height: `${mobileHeight}vh` }}>
-          <Image src={mobileSrc} alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" unoptimized={mobileSrc.startsWith('http')} style={{ objectFit: 'cover', objectPosition: mobilePos }} />
+        <div className="hero-bg-mobile" style={{ height: `${mobileHeight}vh`, overflow: 'hidden' }}>
+          <Image src={mobileSrc} alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" unoptimized={mobileSrc.startsWith('http')} style={{ objectFit: 'cover', objectPosition: mobilePos, transform: `scale(${mobileZoom})` }} />
         </div>
       </section>
 
