@@ -3,11 +3,14 @@ import Image from "next/image";
 import CategoryScroll from "../components/CategoryScroll";
 import ProductGrid from "../components/ProductGrid";
 import DecorationOverlay from '../components/DecorationOverlay';
+import DraggableHeroImage from '../components/DraggableHeroImage';
 import { supabase } from "../utils/supabase";
 
 export const dynamic = 'force-dynamic';
 
-export default async function Home() {
+export default async function Home({ searchParams }: { searchParams: Promise<{ studio?: string }> }) {
+  const resolvedSearchParams = await searchParams;
+  const isStudio = resolvedSearchParams?.studio === 'true';
   const { data: products } = await supabase.from('products').select('*').limit(8);
   const { data: themeData } = await supabase.from('themes').select('*').eq('id', 'active_theme').maybeSingle();
   const desktopSrc = themeData?.hero_image_url || '/hero.png';
@@ -24,12 +27,17 @@ export default async function Home() {
     <main>
       <CategoryScroll />
       <section className="hero">
-        <div className="hero-bg-desktop" style={{ height: `${desktopHeight}vh`, overflow: 'hidden' }}>
-          <Image src={desktopSrc} alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" unoptimized={desktopSrc.startsWith('http')} style={{ objectFit: 'cover', objectPosition: desktopPos, transform: `scale(${desktopZoom})` }} />
-        </div>
-        <div className="hero-bg-mobile" style={{ height: `${mobileHeight}vh`, overflow: 'hidden' }}>
-          <Image src={mobileSrc} alt="Janani Home Foods Traditional Sweets" fill priority className="hero-img" unoptimized={mobileSrc.startsWith('http')} style={{ objectFit: 'cover', objectPosition: mobilePos, transform: `scale(${mobileZoom})` }} />
-        </div>
+        <DraggableHeroImage 
+          desktopSrc={desktopSrc}
+          mobileSrc={mobileSrc}
+          initialDesktopHeight={desktopHeight}
+          initialMobileHeight={mobileHeight}
+          initialDesktopPos={desktopPos}
+          initialMobilePos={mobilePos}
+          initialDesktopZoom={desktopZoom}
+          initialMobileZoom={mobileZoom}
+          isStudio={isStudio}
+        />
       </section>
 
       <section id="featured" className="section">
