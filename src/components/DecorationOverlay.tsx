@@ -142,7 +142,7 @@ export default function DecorationOverlay() {
             key={dec.id}
             className={`responsive-dec ${dec.show_on_mobile === false ? 'hide-on-mobile' : ''} ${dec.show_on_desktop === false ? 'hide-on-desktop' : ''}`}
             style={{
-              position: dec.hotspot_id ? 'absolute' : 'fixed',
+              position: 'absolute',
               left: dec.hotspot_id ? '50%' : `${dec.x_percent}%`,
               top: dec.hotspot_id ? '50%' : `${dec.y_percent}%`,
               width: dec.hotspot_id ? '100%' : `${(dec.size || 1) * 60}px`,

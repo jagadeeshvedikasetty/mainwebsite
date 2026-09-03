@@ -114,6 +114,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
           </div>
         </div>
       </section>
+      
+      <DecorationOverlay />
     </main>
   );
 }

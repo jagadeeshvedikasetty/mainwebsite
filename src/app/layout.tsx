@@ -6,7 +6,6 @@ import Navbar from "../components/Navbar";
 import PromoBar from "../components/PromoBar";
 import BottomNav from "../components/BottomNav";
 import FloatingActions from "../components/FloatingActions";
-import DecorationOverlay from "../components/DecorationOverlay";
 import ThemeProvider from "../components/ThemeProvider";
 import EffectsOverlay from "../components/EffectsOverlay";
 
@@ -63,7 +62,6 @@ export default function RootLayout({
         </ThemeProvider>
         <FloatingActions />
         <EffectsOverlay />
-        <DecorationOverlay />
       </body>
     </html>
   );
