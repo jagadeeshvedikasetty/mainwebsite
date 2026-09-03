@@ -24,7 +24,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
   const mobileZoom = themeData?.hero_mobile_zoom ?? 1.0;
 
   return (
-    <main className="relative min-h-screen">
+    <main>
       <div id="hotspot-top-left" className="hotspot-medium absolute top-0 left-0 z-40 pointer-events-none"></div>
       <div id="hotspot-top-right" className="hotspot-medium absolute top-0 right-0 z-40 pointer-events-none"></div>
       <div id="hotspot-bottom-left" className="hotspot-medium absolute bottom-0 left-0 z-40 pointer-events-none"></div>

@@ -499,24 +499,28 @@ a:hover {
 
 /* Hotspot Base Sizes (Responsive) */
 .hotspot-small {
+  position: absolute;
   width: 10vw;
   height: 10vw;
   max-width: 40px;
   max-height: 40px;
 }
 .hotspot-medium {
+  position: absolute;
   width: 15vw;
   height: 15vw;
   max-width: 60px;
   max-height: 60px;
 }
 .hotspot-large {
+  position: absolute;
   width: 25vw;
   height: 25vw;
   max-width: 90px;
   max-height: 90px;
 }
 .hotspot-xlarge {
+  position: absolute;
   width: 35vw;
   height: 35vw;
   max-width: 120px;
