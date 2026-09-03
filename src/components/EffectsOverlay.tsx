@@ -83,8 +83,8 @@ export default function EffectsOverlay() {
     if (settings.duration > 0 && isVisible && (activeEffect || customEffectUrl)) {
       const timer = setTimeout(() => {
         setIsVisible(false)
-        // Wait for the 1000ms fade transition to complete before unmounting
-        setTimeout(() => setShouldRender(false), 1000)
+        // Wait for the 1000ms fade transition to complete before unmounting, add slight buffer
+        setTimeout(() => setShouldRender(false), 1200)
       }, settings.duration * 1000)
       return () => clearTimeout(timer)
     }
@@ -94,7 +94,7 @@ export default function EffectsOverlay() {
 
   const overlay = (
     <div 
-      className={`pointer-events-none transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      className="pointer-events-none"
       aria-hidden="true"
       style={{ 
         position: 'fixed',
@@ -105,8 +105,10 @@ export default function EffectsOverlay() {
         zIndex: 2147483647,
         isolation: 'isolate',
         transform: 'translateZ(0)',
-        willChange: 'transform',
-        pointerEvents: 'none'
+        willChange: 'opacity, transform',
+        pointerEvents: 'none',
+        transition: 'opacity 1s ease-in-out',
+        opacity: isVisible ? 1 : 0
       }}
     >
       {customEffectUrl ? (
