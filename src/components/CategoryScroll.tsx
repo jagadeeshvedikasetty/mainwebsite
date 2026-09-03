@@ -19,8 +19,9 @@ export default function CategoryScroll() {
       <div className="category-scroll">
         {categories.map((cat, idx) => (
           <Link href={cat.link} key={idx} className="category-item">
-            <div className="category-circle">
-              <Image src={cat.img} alt={cat.name} fill sizes="100px" className="category-img" />
+            <div className="category-circle relative">
+              <div id={`hotspot-category-${cat.name.toLowerCase().replace(' ', '-')}`} className="hotspot-small absolute -top-2 -left-2 z-10 pointer-events-none"></div>
+              <Image src={cat.img} alt={cat.name} fill sizes="100px" className="category-img relative z-0" />
             </div>
             <span className="category-name">{cat.name}</span>
           </Link>

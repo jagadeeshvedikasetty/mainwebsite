@@ -19,8 +19,10 @@ export default function Navbar() {
           {isMenuOpen ? '✕' : '☰'}
         </button>
 
-        <Link href="/" className="logo-link">
-          <Image src="/logo.png" alt="Janani Home Foods Logo" width={180} height={70} className="logo-img" />
+        <Link href="/" className="logo-link relative">
+          <div id="hotspot-header-logo-left" className="hotspot-small absolute top-0 -left-6 z-50"></div>
+          <Image src="/logo.png" alt="Janani Home Foods Logo" width={180} height={70} className="logo-img relative z-10" />
+          <div id="hotspot-header-logo-right" className="hotspot-small absolute top-0 -right-6 z-50"></div>
         </Link>
 
         <div className={`nav-links ${isMenuOpen ? 'nav-links-open' : ''}`}>

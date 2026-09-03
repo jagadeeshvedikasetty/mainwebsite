@@ -134,6 +134,10 @@ export default function DraggableHeroImage({
           unoptimized={desktopSrc.startsWith('http')} 
           style={{ objectFit: 'cover', objectPosition: dPos, transform: `scale(${dZoom})`, pointerEvents: 'none' }} 
         />
+        <div id="hotspot-hero-top-left" className="hotspot-large absolute top-4 left-4 z-10 pointer-events-none"></div>
+        <div id="hotspot-hero-top-right" className="hotspot-large absolute top-4 right-4 z-10 pointer-events-none"></div>
+        <div id="hotspot-hero-bottom-left" className="hotspot-large absolute bottom-4 left-4 z-10 pointer-events-none"></div>
+        <div id="hotspot-hero-bottom-right" className="hotspot-large absolute bottom-4 right-4 z-10 pointer-events-none"></div>
       </div>
       <div 
         ref={mobileRef}
@@ -152,6 +156,10 @@ export default function DraggableHeroImage({
           unoptimized={mobileSrc.startsWith('http')} 
           style={{ objectFit: 'cover', objectPosition: mPos, transform: `scale(${mZoom})`, pointerEvents: 'none' }} 
         />
+        <div id="hotspot-hero-top-left-mobile" className="hotspot-large absolute top-4 left-4 z-10 pointer-events-none"></div>
+        <div id="hotspot-hero-top-right-mobile" className="hotspot-large absolute top-4 right-4 z-10 pointer-events-none"></div>
+        <div id="hotspot-hero-bottom-left-mobile" className="hotspot-large absolute bottom-4 left-4 z-10 pointer-events-none"></div>
+        <div id="hotspot-hero-bottom-right-mobile" className="hotspot-large absolute bottom-4 right-4 z-10 pointer-events-none"></div>
       </div>
     </>
   );
