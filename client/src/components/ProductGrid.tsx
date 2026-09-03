@@ -41,7 +41,7 @@ export default function ProductGrid({ products }: { products: any[] }) {
                 unoptimized // Because we use external Cloudinary URLs
               />
               
-              {product.video_url ? (
+              {product.video_url && (
                 <video 
                   src={product.video_url} 
                   className="product-image-hover" 
@@ -49,16 +49,6 @@ export default function ProductGrid({ products }: { products: any[] }) {
                   loop 
                   playsInline 
                   style={{ objectFit: 'cover', transform: `scale(${product.video_scale || 1.0})` }}
-                />
-              ) : (
-                // Fallback video if they haven't uploaded one for this product yet
-                <video 
-                  src="/product-hover.mp4" 
-                  className="product-image-hover" 
-                  muted 
-                  loop 
-                  playsInline 
-                  style={{ objectFit: 'cover' }}
                 />
               )}
               

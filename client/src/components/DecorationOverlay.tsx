@@ -49,6 +49,39 @@ export const ICONS: Record<string, React.ReactNode> = {
   )
 }
 
+function CustomDecoration({ url }: { url: string }) {
+  const isLottie = url.toLowerCase().endsWith('.json')
+  const [lottieData, setLottieData] = useState<any>(null)
+
+  useEffect(() => {
+    if (isLottie) {
+      fetch(url)
+        .then(res => res.json())
+        .then(data => setLottieData(data))
+        .catch(err => console.error("Failed to load Lottie JSON", err))
+    }
+  }, [url, isLottie])
+
+  if (isLottie && lottieData) {
+    return (
+      <Lottie 
+        src={lottieData} 
+        loop={true} 
+        autoplay={true}
+        style={{ width: '100%', height: '100%' }} 
+      />
+    )
+  }
+
+  if (!isLottie) {
+    return (
+      <img src={url} alt="Decoration" style={{ width: '100%', height: '100%', objectFit: 'contain' }} draggable={false} />
+    )
+  }
+
+  return null
+}
+
 export default function DecorationOverlay() {
   const [decorations, setDecorations] = useState<any[]>([])
   const [theme, setTheme] = useState<any>(null)
@@ -184,47 +217,9 @@ export default function DecorationOverlay() {
         const isSelected = isStudio && dec.id === selectedId
         const size = (dec.size || 1) * 60
 
-        // Kites get special treatment
-        if (dec.icon_name === 'kite') {
-          return (
-            <div key={`kite-wrapper-${dec.id}`}>
-              {/* Only spawn animated kites if they are active, even in studio mode */}
-              {(dec.is_active || !isStudio) && (
-                <KiteSpawner dec={dec} density={theme?.effect_density || 1.0} />
-              )}
-              
-              {/* If in Studio mode, render a static kite icon so the user has something to drag! */}
-              {isStudio && (
-                <div
-                  className={`responsive-dec ${dec.show_on_mobile === false ? 'hide-on-mobile' : ''} ${dec.show_on_desktop === false ? 'hide-on-desktop' : ''}`}
-                  onPointerDown={(e) => handlePointerDown(dec.id, e)}
-                  style={{
-                    '--x-desk': `${dec.x_percent}%`,
-                    '--y-desk': `${dec.y_percent}%`,
-                    '--x-mob': `${dec.mobile_x_percent ?? dec.x_percent}%`,
-                    '--y-mob': `${dec.mobile_y_percent ?? dec.y_percent}%`,
-                    position: 'absolute',
-                    left: 'var(--x-pos, var(--x-desk))',
-                    top: 'var(--y-pos, var(--y-desk))',
-                    width: `${size}px`,
-                    height: `${size}px`,
-                    transform: 'translate(-50%, -50%)',
-                    zIndex: 2147483647, // High z-index so it's always grabbable
-                    pointerEvents: 'auto',
-                    cursor: draggingId === dec.id ? 'grabbing' : 'grab',
-                    userSelect: 'none',
-                    ...(isSelected ? { outline: '2px solid #60a5fa', borderRadius: '9999px' } : {})
-                  } as React.CSSProperties}
-                >
-                  {ICONS['kite']}
-                </div>
-              )}
-            </div>
-          )
-        }
-        
-        // Standard decorations (Diyas, Mangoes, etc)
+        // Standard decorations (Diyas, Mangoes, Kites, etc)
         return (
+
           <div
             key={dec.id}
             className={`responsive-dec ${dec.show_on_mobile === false ? 'hide-on-mobile' : ''} ${dec.show_on_desktop === false ? 'hide-on-desktop' : ''}`}
@@ -249,6 +244,8 @@ export default function DecorationOverlay() {
           >
             {ICONS[dec.icon_name] ? (
               ICONS[dec.icon_name]
+            ) : dec.icon_name.startsWith('http') ? (
+              <CustomDecoration url={dec.icon_name} />
             ) : dec.icon_name.startsWith('lottie:') ? (
               <Lottie src={JSON.parse(dec.icon_name.substring(7))} autoplay={true} loop={true} style={{ width: '100%', height: '100%' }} />
             ) : dec.icon_name.startsWith('data:image/') ? (
@@ -261,56 +258,5 @@ export default function DecorationOverlay() {
       })}
     </div>
   )
-
-  return (
-    <>
-      <style>{`
-        @keyframes studioKiteFly {
-          0% { transform: translateY(0) rotate(-5deg); opacity: 0; }
-          10% { opacity: 1; }
-          80% { opacity: 1; }
-          100% { transform: translateY(-120vh) rotate(5deg); opacity: 0; }
-        }
-      `}</style>
-      {createPortal(overlay, document.body)}
-    </>
-  )
-}
-
-function KiteSpawner({ dec, density }: { dec: any, density: number }) {
-  const count = Math.max(1, Math.round(4 * density));
-  const size = (dec.size || 1) * 60;
-  
-  return (
-    <>
-      {Array.from({ length: count }).map((_, i) => {
-        // Spread them out horizontally around the spawner (wider spread)
-        const offsetX = (Math.random() - 0.5) * 60; 
-        const delay = -(Math.random() * 25); // Negative delay so they are visible immediately
-        const duration = 10 + Math.random() * 15; 
-        
-        return (
-          <div
-            key={i}
-            style={{
-              position: 'absolute',
-              left: `calc(${dec.x_percent}% + ${offsetX}vw)`,
-              top: `${dec.y_percent}%`,
-              width: `${size}px`,
-              height: `${size}px`,
-              zIndex: 2147483647, // High z-index so they fly over everything including Navbar
-              pointerEvents: 'none',
-              userSelect: 'none',
-              animation: `studioKiteFly ${duration}s linear infinite`,
-              animationDelay: `${delay}s`
-            }}
-          >
-            <div style={{ width: '100%', height: '100%', transform: `translate(-50%, -50%)` }}>
-              {ICONS['kite']}
-            </div>
-          </div>
-        )
-      })}
-    </>
-  )
+  return createPortal(overlay, document.body)
 }

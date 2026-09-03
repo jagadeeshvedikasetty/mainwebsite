@@ -92,7 +92,7 @@ function ShopContent() {
                     className="product-image" 
                     unoptimized 
                   />
-                  {product.video_url ? (
+                  {product.video_url && (
                     <video 
                       src={product.video_url} 
                       className="product-image-hover" 
@@ -100,15 +100,6 @@ function ShopContent() {
                       loop 
                       playsInline 
                       style={{ objectFit: 'cover', transform: `scale(${product.video_scale || 1.0})` }}
-                    />
-                  ) : (
-                    <video 
-                      src="/product-hover.mp4" 
-                      className="product-image-hover" 
-                      muted 
-                      loop 
-                      playsInline 
-                      style={{ objectFit: 'cover' }}
                     />
                   )}
                   <div className="quick-shop-btn">Quick Shop</div>
