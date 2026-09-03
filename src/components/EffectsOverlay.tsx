@@ -13,6 +13,7 @@ export default function EffectsOverlay() {
   const [settings, setSettings] = useState({ opacity: 0.7, scale: 1.0, speed: 1.0, density: 1.0, duration: 0 })
   const [mounted, setMounted] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
+  const [shouldRender, setShouldRender] = useState(true)
 
   useEffect(() => {
     setMounted(true)
@@ -34,7 +35,9 @@ export default function EffectsOverlay() {
           density: data.effect_density ?? 1.0,
           duration: data.effect_duration ?? 0
         })
-        setIsVisible(true) // Reset visibility on theme update
+        setShouldRender(true) // Reset render on theme update
+        // Tiny delay before fading in to ensure it renders first
+        setTimeout(() => setIsVisible(true), 50)
       } else {
         setActiveEffect(null)
         setCustomEffectUrl(null)
@@ -80,12 +83,14 @@ export default function EffectsOverlay() {
     if (settings.duration > 0 && isVisible && (activeEffect || customEffectUrl)) {
       const timer = setTimeout(() => {
         setIsVisible(false)
+        // Wait for the 1000ms fade transition to complete before unmounting
+        setTimeout(() => setShouldRender(false), 1000)
       }, settings.duration * 1000)
       return () => clearTimeout(timer)
     }
   }, [settings.duration, activeEffect, customEffectUrl, isVisible])
 
-  if (!mounted || (!activeEffect && !customEffectUrl)) return null;
+  if (!mounted || !shouldRender || (!activeEffect && !customEffectUrl)) return null;
 
   const overlay = (
     <div 
