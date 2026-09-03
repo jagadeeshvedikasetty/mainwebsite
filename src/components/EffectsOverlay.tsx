@@ -10,8 +10,9 @@ export default function EffectsOverlay() {
   const [activeEffect, setActiveEffect] = useState<string | null>(null)
   const [customEffectUrl, setCustomEffectUrl] = useState<string | null>(null)
   const [customEffects, setCustomEffects] = useState<any[]>([])
-  const [settings, setSettings] = useState({ opacity: 0.7, scale: 1.0, speed: 1.0, density: 1.0 })
+  const [settings, setSettings] = useState({ opacity: 0.7, scale: 1.0, speed: 1.0, density: 1.0, duration: 0 })
   const [mounted, setMounted] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
     setMounted(true)
@@ -19,7 +20,7 @@ export default function EffectsOverlay() {
     const fetchTheme = async () => {
       const { data, error } = await supabase
         .from('themes')
-        .select('active_effect, custom_effect_url, effect_opacity, effect_scale, effect_speed, effect_density')
+        .select('active_effect, custom_effect_url, effect_opacity, effect_scale, effect_speed, effect_density, effect_duration')
         .eq('id', 'active_theme')
         .maybeSingle()
       
@@ -30,8 +31,10 @@ export default function EffectsOverlay() {
           opacity: data.effect_opacity ?? 0.7,
           scale: data.effect_scale ?? 1.0,
           speed: data.effect_speed ?? 1.0,
-          density: data.effect_density ?? 1.0
+          density: data.effect_density ?? 1.0,
+          duration: data.effect_duration ?? 0
         })
+        setIsVisible(true) // Reset visibility on theme update
       } else {
         setActiveEffect(null)
         setCustomEffectUrl(null)
@@ -72,11 +75,21 @@ export default function EffectsOverlay() {
     }
   }, [])
 
+  // Timer logic
+  useEffect(() => {
+    if (settings.duration > 0 && isVisible && (activeEffect || customEffectUrl)) {
+      const timer = setTimeout(() => {
+        setIsVisible(false)
+      }, settings.duration * 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [settings.duration, activeEffect, customEffectUrl, isVisible])
+
   if (!mounted || (!activeEffect && !customEffectUrl)) return null;
 
   const overlay = (
     <div 
-      className="pointer-events-none" 
+      className={`pointer-events-none transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
       aria-hidden="true"
       style={{ 
         position: 'fixed',
