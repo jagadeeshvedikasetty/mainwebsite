@@ -239,6 +239,7 @@ export default function DecorationOverlay() {
               pointerEvents: isStudio ? 'auto' : 'none',
               cursor: isStudio ? (draggingId === dec.id ? 'grabbing' : 'grab') : 'default',
               userSelect: 'none',
+              touchAction: isStudio ? 'none' : 'auto',
               ...(isSelected ? { outline: '2px solid #60a5fa', borderRadius: '9999px', zIndex: 2147483647 } : {})
             } as React.CSSProperties}
           >

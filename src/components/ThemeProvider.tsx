@@ -10,6 +10,7 @@ type Theme = {
   secondary_color: string;
   active_effect: string | null;
   background_image_url?: string | null;
+  mobile_background_image_url?: string | null;
   is_active: boolean;
 }
 
@@ -36,25 +37,37 @@ function applyTheme(themeData: Theme) {
     root.style.setProperty('--badge-sale', themeData.secondary_color);
   }
 
-  // Build background layers
-  const layers: string[] = [];
+  const updateBackground = () => {
+    const isMobile = window.innerWidth < 768;
+    const bgUrl = (isMobile && themeData.mobile_background_image_url) 
+      ? themeData.mobile_background_image_url 
+      : themeData.background_image_url;
 
-  if (themeData.background_image_url) {
-    layers.push(`url("${themeData.background_image_url}")`);
+    const layers: string[] = [];
+    if (bgUrl) {
+      layers.push(`url("${bgUrl}")`);
+    }
+
+    if (themeData.primary_color && themeData.secondary_color) {
+      const pRgba = hexToRgba(themeData.primary_color, 0.15);
+      const sRgba = hexToRgba(themeData.secondary_color, 0.15);
+      layers.push(`linear-gradient(180deg, ${pRgba} 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, ${sRgba} 100%)`);
+    }
+
+    document.body.style.backgroundImage = layers.length > 0 ? layers.join(', ') : 'none';
+    document.body.style.backgroundAttachment = 'fixed';
+    document.body.style.backgroundSize = 'cover, cover';
+    document.body.style.backgroundRepeat = 'no-repeat, no-repeat';
+    document.body.style.backgroundPosition = 'center, center';
+  };
+
+  updateBackground();
+  
+  if ((window as any)._themeResizeListener) {
+    window.removeEventListener('resize', (window as any)._themeResizeListener);
   }
-
-  if (themeData.primary_color && themeData.secondary_color) {
-    const pRgba = hexToRgba(themeData.primary_color, 0.15);
-    const sRgba = hexToRgba(themeData.secondary_color, 0.15);
-    layers.push(`linear-gradient(180deg, ${pRgba} 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, ${sRgba} 100%)`);
-  }
-
-  // Apply directly to body — no CSS variables, no chance of failure
-  document.body.style.backgroundImage = layers.length > 0 ? layers.join(', ') : 'none';
-  document.body.style.backgroundAttachment = 'fixed';
-  document.body.style.backgroundSize = 'cover, cover';
-  document.body.style.backgroundRepeat = 'no-repeat, no-repeat';
-  document.body.style.backgroundPosition = 'center, center';
+  (window as any)._themeResizeListener = updateBackground;
+  window.addEventListener('resize', updateBackground);
 }
 
 function removeTheme() {
