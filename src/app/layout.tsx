@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import type { Metadata, Viewport } from "next";
-import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
