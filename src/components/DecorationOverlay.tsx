@@ -149,11 +149,44 @@ export default function DecorationOverlay() {
               height: dec.hotspot_id ? '100%' : `${(dec.size || 1) * 60}px`,
               transform: 'translate(-50%, -50%)',
               zIndex: 10,
-              pointerEvents: 'none',
+              pointerEvents: isStudio ? 'auto' : 'none',
               userSelect: 'none',
               opacity: dec.opacity || 1
             }}
           >
+            {/* Delete button (Studio only) */}
+            {isStudio && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.parent.postMessage({ type: 'DELETE_DECORATION', id: dec.id }, '*');
+                }}
+                className="delete-decoration-btn"
+                style={{
+                  position: 'absolute',
+                  top: '-12px',
+                  right: '-12px',
+                  background: '#ef4444',
+                  color: 'white',
+                  width: '24px',
+                  height: '24px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  border: '2px solid white',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                  zIndex: 50,
+                  fontSize: '12px',
+                  fontWeight: 'bold'
+                }}
+                title="Remove decoration"
+              >
+                ✕
+              </button>
+            )}
+
             {ICONS[dec.icon_name] ? (
               ICONS[dec.icon_name]
             ) : dec.icon_name.startsWith('http') ? (
