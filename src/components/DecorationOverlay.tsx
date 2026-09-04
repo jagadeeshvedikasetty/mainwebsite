@@ -203,10 +203,9 @@ export default function DecorationOverlay() {
 
         if (hotspotNode) {
           return createPortal(content, hotspotNode);
-        } else if (!dec.hotspot_id) {
-          return createPortal(content, document.body);
         }
         
+        // If there's no hotspot node or no hotspot_id, it is ignored
         return null;
       })}
     </>
