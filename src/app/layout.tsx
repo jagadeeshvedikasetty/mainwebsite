@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import type { Metadata, Viewport } from "next";
+import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
@@ -7,7 +9,6 @@ import PromoBar from "../components/PromoBar";
 import BottomNav from "../components/BottomNav";
 import FloatingActions from "../components/FloatingActions";
 import ThemeProvider from "../components/ThemeProvider";
-import EffectsOverlay from "../components/EffectsOverlay";
 
 export const metadata: Metadata = {
   title: "Janani Home Foods - Authentic Indian Sweets & Pickles",
@@ -61,7 +62,6 @@ export default function RootLayout({
         </footer>
         </ThemeProvider>
         <FloatingActions />
-        <EffectsOverlay />
       </body>
     </html>
   );

@@ -3,6 +3,7 @@ import Image from "next/image";
 import CategoryScroll from "../components/CategoryScroll";
 import ProductGrid from "../components/ProductGrid";
 import DecorationOverlay from '../components/DecorationOverlay';
+import EffectsOverlay from '../components/EffectsOverlay';
 import DraggableHeroImage from '../components/DraggableHeroImage';
 import { supabase } from "../utils/supabase";
 
@@ -116,6 +117,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
       </section>
       
       <DecorationOverlay />
+      <EffectsOverlay />
     </main>
   );
 }
