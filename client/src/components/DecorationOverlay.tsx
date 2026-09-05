@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Lottie } from 'lottie-react'
 import { supabase } from '../utils/supabase'
@@ -84,35 +84,19 @@ function CustomDecoration({ url }: { url: string }) {
 
 export default function DecorationOverlay() {
   const [decorations, setDecorations] = useState<any[]>([])
-  const [theme, setTheme] = useState<any>(null)
   const [isStudio, setIsStudio] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const [selectedId, setSelectedId] = useState<number | null>(null)
-  const [draggingId, setDraggingId] = useState<number | null>(null)
-  
-  // Use ref to keep latest state for window event listeners without constant rebinding
-  const stateRef = useRef({ draggingId, decorations })
-  useEffect(() => {
-    stateRef.current = { draggingId, decorations }
-  }, [draggingId, decorations])
   
   useEffect(() => {
     setMounted(true)
     const urlIsStudio = typeof window !== 'undefined' && window.location.search.includes('studio=true')
     
-    const fetchTheme = async () => {
-      const { data: themeData } = await supabase.from('themes').select('*').eq('id', 'active_theme').maybeSingle()
-      if (themeData) setTheme(themeData)
-    }
-    
     if (urlIsStudio) {
       setIsStudio(true)
-      fetchTheme()
       
       const handleMessage = (e: MessageEvent) => {
         if (e.data?.type === 'STUDIO_SYNC') {
           setDecorations(e.data.decorations)
-          setSelectedId(e.data.selectedId)
         }
       }
       window.addEventListener('message', handleMessage)
@@ -126,7 +110,6 @@ export default function DecorationOverlay() {
       const fetchDecorations = async () => {
         const { data } = await supabase.from('floating_decorations').select('*').eq('is_active', true)
         if (data) setDecorations(data)
-        fetchTheme()
       }
       fetchDecorations()
       const interval = setInterval(fetchDecorations, 2000)
@@ -134,114 +117,93 @@ export default function DecorationOverlay() {
     }
   }, [])
 
-  // Global pointer events for dragging
-  useEffect(() => {
-    if (!isStudio) return
-
-    const handlePointerMove = (e: PointerEvent) => {
-      const { draggingId } = stateRef.current
-      if (draggingId === null) return
-      const isMobile = window.innerWidth < 768
-      const x = Math.max(0, Math.min(100, (e.clientX / window.innerWidth) * 100))
-      const y = Math.max(0, Math.min(100, (e.clientY / window.innerHeight) * 100))
-      setDecorations(prev => prev.map(d => d.id === draggingId ? { 
-        ...d, 
-        ...(isMobile ? { mobile_x_percent: x, mobile_y_percent: y } : { x_percent: x, y_percent: y }) 
-      } : d))
-    }
-
-    const handlePointerUp = (e: PointerEvent) => {
-      const { draggingId, decorations: currentDecorations } = stateRef.current
-      if (draggingId !== null) {
-        const isMobile = window.innerWidth < 768
-        const x = Math.max(0, Math.min(100, (e.clientX / window.innerWidth) * 100))
-        const y = Math.max(0, Math.min(100, (e.clientY / window.innerHeight) * 100))
-        window.parent.postMessage({
-          type: 'STUDIO_DECORATION_UPDATED',
-          id: draggingId,
-          x_percent: x,
-          y_percent: y,
-          isMobile
-        }, '*')
-        setDraggingId(null)
-      }
-    }
-
-    window.addEventListener('pointermove', handlePointerMove)
-    window.addEventListener('pointerup', handlePointerUp)
-    return () => {
-      window.removeEventListener('pointermove', handlePointerMove)
-      window.removeEventListener('pointerup', handlePointerUp)
-    }
-  }, [isStudio])
-
-  const handlePointerDown = (id: number, e: React.PointerEvent) => {
-    if (!isStudio) return
-    e.preventDefault()
-    e.stopPropagation()
-    setDraggingId(id)
-    setSelectedId(id)
-    window.parent.postMessage({
-      type: 'STUDIO_SELECTION_CHANGED',
-      selectedId: id
-    }, '*')
-    ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
-  }
-
   if (!mounted || decorations.length === 0) return null
 
-  // zIndex 4 puts the general decorations under the sticky navbar
-  const overlay = (
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 4 }} aria-hidden="true">
+  // Render each decoration inside its specific Hotspot container using Portals
+  return (
+    <>
       <style>{`
         @media (max-width: 767px) {
-          .responsive-dec {
-            --x-pos: var(--x-mob);
-            --y-pos: var(--y-mob);
-          }
-          .hide-on-mobile {
-            display: none !important;
-          }
+          .hide-on-mobile { display: none !important; }
         }
         @media (min-width: 768px) {
-          .responsive-dec {
-            --x-pos: var(--x-desk);
-            --y-pos: var(--y-desk);
-          }
-          .hide-on-desktop {
-            display: none !important;
-          }
+          .hide-on-desktop { display: none !important; }
         }
       `}</style>
+      
       {decorations.filter(d => d.is_active || isStudio).map((dec) => {
-        const isSelected = isStudio && dec.id === selectedId
-        const size = (dec.size || 1) * 60
+        const hotspotNode = dec.hotspot_id ? document.getElementById(dec.hotspot_id) : null;
+        
+        // If a hotspot is specified but not found on this page, don't render it.
+        // Or if it's the old absolute positioning system, we can fallback to body overlay.
+        
+        const isHotspot = !!dec.hotspot_id;
+        let leftPos = isHotspot ? '50%' : `${dec.x_percent}%`;
+        let topPos = isHotspot ? '50%' : `${dec.y_percent}%`;
+        let transformStr = 'translate(-50%, -50%)';
 
-        // Standard decorations (Diyas, Mangoes, Kites, etc)
-        return (
+        if (isHotspot) {
+          if (dec.hotspot_id.includes('top')) topPos = '0%';
+          else if (dec.hotspot_id.includes('bottom')) topPos = '100%';
 
+          if (dec.hotspot_id.includes('left')) leftPos = '0%';
+          else if (dec.hotspot_id.includes('right')) leftPos = '100%';
+
+          const tx = leftPos === '0%' ? '0%' : leftPos === '100%' ? '-100%' : '-50%';
+          const ty = topPos === '0%' ? '0%' : topPos === '100%' ? '-100%' : '-50%';
+          transformStr = `translate(${tx}, ${ty})`;
+        }
+
+        const content = (
           <div
             key={dec.id}
             className={`responsive-dec ${dec.show_on_mobile === false ? 'hide-on-mobile' : ''} ${dec.show_on_desktop === false ? 'hide-on-desktop' : ''}`}
-            onPointerDown={(e) => handlePointerDown(dec.id, e)}
             style={{
-              '--x-desk': `${dec.x_percent}%`,
-              '--y-desk': `${dec.y_percent}%`,
-              '--x-mob': `${dec.mobile_x_percent ?? dec.x_percent}%`,
-              '--y-mob': `${dec.mobile_y_percent ?? dec.y_percent}%`,
               position: 'absolute',
-              left: 'var(--x-pos, var(--x-desk))',
-              top: 'var(--y-pos, var(--y-desk))',
-              width: `${size}px`,
-              height: `${size}px`,
-              transform: 'translate(-50%, -50%)',
-              zIndex: 4, // Behind the navbar
+              left: leftPos,
+              top: topPos,
+              width: isHotspot ? `${(dec.size || 1) * 100}%` : `${(dec.size || 1) * 60}px`,
+              height: isHotspot ? `${(dec.size || 1) * 100}%` : `${(dec.size || 1) * 60}px`,
+              transform: transformStr,
+              zIndex: 10,
               pointerEvents: isStudio ? 'auto' : 'none',
-              cursor: isStudio ? (draggingId === dec.id ? 'grabbing' : 'grab') : 'default',
               userSelect: 'none',
-              ...(isSelected ? { outline: '2px solid #60a5fa', borderRadius: '9999px', zIndex: 2147483647 } : {})
-            } as React.CSSProperties}
+              opacity: dec.opacity || 1
+            }}
           >
+            {/* Delete button (Studio only) */}
+            {isStudio && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.parent.postMessage({ type: 'DELETE_DECORATION', id: dec.id }, '*');
+                }}
+                className="delete-decoration-btn"
+                style={{
+                  position: 'absolute',
+                  top: '-12px',
+                  right: '-12px',
+                  background: '#ef4444',
+                  color: 'white',
+                  width: '24px',
+                  height: '24px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  border: '2px solid white',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                  zIndex: 50,
+                  fontSize: '12px',
+                  fontWeight: 'bold'
+                }}
+                title="Remove decoration"
+              >
+                ✕
+              </button>
+            )}
+
             {ICONS[dec.icon_name] ? (
               ICONS[dec.icon_name]
             ) : dec.icon_name.startsWith('http') ? (
@@ -254,9 +216,15 @@ export default function DecorationOverlay() {
               '🎉'
             )}
           </div>
-        )
+        );
+
+        if (hotspotNode) {
+          return createPortal(content, hotspotNode);
+        }
+        
+        // If there's no hotspot node or no hotspot_id, it is ignored
+        return null;
       })}
-    </div>
+    </>
   )
-  return createPortal(overlay, document.body)
 }

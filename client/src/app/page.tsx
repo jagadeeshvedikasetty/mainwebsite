@@ -3,6 +3,7 @@ import Image from "next/image";
 import CategoryScroll from "../components/CategoryScroll";
 import ProductGrid from "../components/ProductGrid";
 import DecorationOverlay from '../components/DecorationOverlay';
+import EffectsOverlay from '../components/EffectsOverlay';
 import DraggableHeroImage from '../components/DraggableHeroImage';
 import { supabase } from "../utils/supabase";
 
@@ -25,8 +26,10 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
 
   return (
     <main>
+      <div id="hotspot-top-left" className="hotspot-medium" style={{ position: 'absolute', top: '16px', left: '16px', zIndex: 60, pointerEvents: 'none' }}></div>
+      <div id="hotspot-top-right" className="hotspot-medium" style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 60, pointerEvents: 'none' }}></div>
       <CategoryScroll />
-      <section className="hero">
+      <section className="hero" style={{ position: 'relative' }}>
         <DraggableHeroImage 
           desktopSrc={desktopSrc}
           mobileSrc={mobileSrc}
@@ -110,6 +113,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
           </div>
         </div>
       </section>
+      
+      <DecorationOverlay />
+      <EffectsOverlay />
     </main>
   );
 }

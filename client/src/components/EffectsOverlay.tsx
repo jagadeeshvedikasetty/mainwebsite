@@ -10,8 +10,10 @@ export default function EffectsOverlay() {
   const [activeEffect, setActiveEffect] = useState<string | null>(null)
   const [customEffectUrl, setCustomEffectUrl] = useState<string | null>(null)
   const [customEffects, setCustomEffects] = useState<any[]>([])
-  const [settings, setSettings] = useState({ opacity: 0.7, scale: 1.0, speed: 1.0, density: 1.0 })
+  const [settings, setSettings] = useState({ opacity: 0.7, scale: 1.0, speed: 1.0, density: 1.0, duration: 0 })
   const [mounted, setMounted] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
+  const [shouldRender, setShouldRender] = useState(true)
 
   useEffect(() => {
     setMounted(true)
@@ -19,7 +21,7 @@ export default function EffectsOverlay() {
     const fetchTheme = async () => {
       const { data, error } = await supabase
         .from('themes')
-        .select('active_effect, custom_effect_url, effect_opacity, effect_scale, effect_speed, effect_density')
+        .select('active_effect, custom_effect_url, effect_opacity, effect_scale, effect_speed, effect_density, effect_duration')
         .eq('id', 'active_theme')
         .maybeSingle()
       
@@ -30,8 +32,12 @@ export default function EffectsOverlay() {
           opacity: data.effect_opacity ?? 0.7,
           scale: data.effect_scale ?? 1.0,
           speed: data.effect_speed ?? 1.0,
-          density: data.effect_density ?? 1.0
+          density: data.effect_density ?? 1.0,
+          duration: data.effect_duration ?? 0
         })
+        setShouldRender(true) // Reset render on theme update
+        // Tiny delay before fading in to ensure it renders first
+        setTimeout(() => setIsVisible(true), 50)
       } else {
         setActiveEffect(null)
         setCustomEffectUrl(null)
@@ -72,11 +78,23 @@ export default function EffectsOverlay() {
     }
   }, [])
 
-  if (!mounted || (!activeEffect && !customEffectUrl)) return null;
+  // Timer logic
+  useEffect(() => {
+    if (settings.duration > 0 && isVisible && (activeEffect || customEffectUrl)) {
+      const timer = setTimeout(() => {
+        setIsVisible(false)
+        // Wait for the 1000ms fade transition to complete before unmounting, add slight buffer
+        setTimeout(() => setShouldRender(false), 1200)
+      }, settings.duration * 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [settings.duration, activeEffect, customEffectUrl, isVisible])
+
+  if (!mounted || !shouldRender || (!activeEffect && !customEffectUrl)) return null;
 
   const overlay = (
     <div 
-      className="pointer-events-none" 
+      className="pointer-events-none"
       aria-hidden="true"
       style={{ 
         position: 'fixed',
@@ -87,8 +105,10 @@ export default function EffectsOverlay() {
         zIndex: 2147483647,
         isolation: 'isolate',
         transform: 'translateZ(0)',
-        willChange: 'transform',
-        pointerEvents: 'none'
+        willChange: 'opacity, transform',
+        pointerEvents: 'none',
+        transition: 'opacity 1s ease-in-out',
+        opacity: isVisible ? 1 : 0
       }}
     >
       {customEffectUrl ? (

@@ -6,9 +6,7 @@ import Navbar from "../components/Navbar";
 import PromoBar from "../components/PromoBar";
 import BottomNav from "../components/BottomNav";
 import FloatingActions from "../components/FloatingActions";
-import DecorationOverlay from "../components/DecorationOverlay";
 import ThemeProvider from "../components/ThemeProvider";
-import EffectsOverlay from "../components/EffectsOverlay";
 
 export const metadata: Metadata = {
   title: "Janani Home Foods - Authentic Indian Sweets & Pickles",
@@ -62,8 +60,6 @@ export default function RootLayout({
         </footer>
         </ThemeProvider>
         <FloatingActions />
-        <EffectsOverlay />
-        <DecorationOverlay />
       </body>
     </html>
   );
