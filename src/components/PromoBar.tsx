@@ -1,8 +1,20 @@
-"use client";
-
 import Link from 'next/link';
+import { supabase } from '../utils/supabase';
 
-export default function PromoBar() {
+export default async function PromoBar() {
+  const { data: theme } = await supabase
+    .from('themes')
+    .select('promo_text, promo_link')
+    .eq('id', 'active_theme')
+    .maybeSingle();
+
+  const promoText = theme?.promo_text || '';
+  const promoLink = theme?.promo_link || '';
+
+  if (!promoText) {
+    return null;
+  }
+
   return (
     <div style={{
       backgroundColor: 'var(--primary-color)',
@@ -19,9 +31,8 @@ export default function PromoBar() {
       zIndex: 6,
       borderBottom: '4px solid var(--secondary-color, transparent)'
     }}>
-      <span>🎉</span>
-      <Link href="/shop" style={{ color: 'white', textDecoration: 'none' }}>
-        Newly launched: Maha Combo Pack. Click to Order Now!
+      <Link href={promoLink || '#'} style={{ color: 'white', textDecoration: 'none' }}>
+        {promoText}
       </Link>
     </div>
   );
