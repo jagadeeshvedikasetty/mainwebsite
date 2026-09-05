@@ -1,12 +1,19 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useCartStore } from '../store/cartStore';
 import './navbar.css';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const totalItems = useCartStore((state) => state.getTotalItems());
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -36,7 +43,7 @@ export default function Navbar() {
         <div className="nav-actions">
           <button className="icon-btn" aria-label="Search">🔍</button>
           <button className="icon-btn" aria-label="Account">👤</button>
-          <button className="icon-btn" aria-label="Cart">🛒 <span>(0)</span></button>
+          <Link href="/cart" className="icon-btn" aria-label="Cart" style={{ textDecoration: 'none' }}>🛒 <span>({mounted ? totalItems : 0})</span></Link>
         </div>
       </div>
     </nav>
