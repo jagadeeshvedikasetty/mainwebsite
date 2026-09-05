@@ -26,8 +26,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
 
   return (
     <main>
-      <div id="hotspot-top-left" className="hotspot-medium" style={{ position: 'absolute', top: '16px', left: '16px', zIndex: 40, pointerEvents: 'none' }}></div>
-      <div id="hotspot-top-right" className="hotspot-medium" style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 40, pointerEvents: 'none' }}></div>
+      <div id="hotspot-top-left" className="hotspot-medium" style={{ position: 'absolute', top: '16px', left: '16px', zIndex: 60, pointerEvents: 'none' }}></div>
+      <div id="hotspot-top-right" className="hotspot-medium" style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 60, pointerEvents: 'none' }}></div>
       <CategoryScroll />
       <section className="hero" style={{ position: 'relative' }}>
         <DraggableHeroImage 
