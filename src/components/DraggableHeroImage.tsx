@@ -155,11 +155,11 @@ export default function DraggableHeroImage({
       </div>
       
       {/* Global Hero Hotspots (Responsive) */}
-      <div className="absolute inset-0 z-10 pointer-events-none">
-        <div id="hotspot-hero-top-left" className="hotspot-large absolute top-6 left-6 pointer-events-none"></div>
-        <div id="hotspot-hero-top-right" className="hotspot-large absolute top-6 right-6 pointer-events-none"></div>
-        <div id="hotspot-hero-bottom-left" className="hotspot-large absolute bottom-6 left-6 pointer-events-none"></div>
-        <div id="hotspot-hero-bottom-right" className="hotspot-large absolute bottom-6 right-6 pointer-events-none"></div>
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 10, pointerEvents: 'none' }}>
+        <div id="hotspot-hero-top-left" className="hotspot-large" style={{ position: 'absolute', top: '24px', left: '24px', pointerEvents: 'none' }}></div>
+        <div id="hotspot-hero-top-right" className="hotspot-large" style={{ position: 'absolute', top: '24px', right: '24px', pointerEvents: 'none' }}></div>
+        <div id="hotspot-hero-bottom-left" className="hotspot-large" style={{ position: 'absolute', bottom: '24px', left: '24px', pointerEvents: 'none' }}></div>
+        <div id="hotspot-hero-bottom-right" className="hotspot-large" style={{ position: 'absolute', bottom: '24px', right: '24px', pointerEvents: 'none' }}></div>
       </div>
     </>
   );
