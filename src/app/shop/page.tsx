@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { supabase } from '../../utils/supabase';
 
 type Variant = {
@@ -71,8 +72,9 @@ function ShopContent() {
                 className="product-card animate-fade-in" 
                 style={{ animationDelay: `${0.1 + (idx % 10) * 0.1}s` }}
               >
-                <div 
-                  className="product-image-container"
+                <Link 
+                  href={`/shop/${product.id}`}
+                  className="product-image-container block"
                   onMouseEnter={(e) => {
                     const video = e.currentTarget.querySelector('video');
                     if (video) video.play();
@@ -103,10 +105,12 @@ function ShopContent() {
                     />
                   )}
                   <div className="quick-shop-btn">Quick Shop</div>
-                </div>
+                </Link>
                 <div className="product-info">
                   <div className="product-category">{product.category}</div>
-                  <h3 className="product-title font-traditional">{product.name}</h3>
+                  <Link href={`/shop/${product.id}`}>
+                    <h3 className="product-title font-traditional hover:text-orange-600 transition-colors">{product.name}</h3>
+                  </Link>
                   
                   {/* Show price of first variant as 'From Rs...' */}
                   <div className="product-price">
