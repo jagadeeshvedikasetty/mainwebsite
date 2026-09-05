@@ -156,10 +156,10 @@ export default function DraggableHeroImage({
       
       {/* Global Hero Hotspots (Responsive) */}
       <div className="absolute inset-0 z-10 pointer-events-none">
-        <div id="hotspot-hero-top-left" className="hotspot-large absolute top-4 left-4 pointer-events-none"></div>
-        <div id="hotspot-hero-top-right" className="hotspot-large absolute top-4 right-4 pointer-events-none"></div>
-        <div id="hotspot-hero-bottom-left" className="hotspot-large absolute bottom-4 left-4 pointer-events-none"></div>
-        <div id="hotspot-hero-bottom-right" className="hotspot-large absolute bottom-4 right-4 pointer-events-none"></div>
+        <div id="hotspot-hero-top-left" className="hotspot-large absolute top-6 left-6 pointer-events-none"></div>
+        <div id="hotspot-hero-top-right" className="hotspot-large absolute top-6 right-6 pointer-events-none"></div>
+        <div id="hotspot-hero-bottom-left" className="hotspot-large absolute bottom-6 left-6 pointer-events-none"></div>
+        <div id="hotspot-hero-bottom-right" className="hotspot-large absolute bottom-6 right-6 pointer-events-none"></div>
       </div>
     </>
   );
