@@ -137,17 +137,34 @@ export default function DecorationOverlay() {
         // If a hotspot is specified but not found on this page, don't render it.
         // Or if it's the old absolute positioning system, we can fallback to body overlay.
         
+        const isHotspot = !!dec.hotspot_id;
+        let leftPos = isHotspot ? '50%' : `${dec.x_percent}%`;
+        let topPos = isHotspot ? '50%' : `${dec.y_percent}%`;
+        let transformStr = 'translate(-50%, -50%)';
+
+        if (isHotspot) {
+          if (dec.hotspot_id.includes('top')) topPos = '0%';
+          else if (dec.hotspot_id.includes('bottom')) topPos = '100%';
+
+          if (dec.hotspot_id.includes('left')) leftPos = '0%';
+          else if (dec.hotspot_id.includes('right')) leftPos = '100%';
+
+          const tx = leftPos === '0%' ? '0%' : leftPos === '100%' ? '-100%' : '-50%';
+          const ty = topPos === '0%' ? '0%' : topPos === '100%' ? '-100%' : '-50%';
+          transformStr = `translate(${tx}, ${ty})`;
+        }
+
         const content = (
           <div
             key={dec.id}
             className={`responsive-dec ${dec.show_on_mobile === false ? 'hide-on-mobile' : ''} ${dec.show_on_desktop === false ? 'hide-on-desktop' : ''}`}
             style={{
               position: 'absolute',
-              left: dec.hotspot_id ? '50%' : `${dec.x_percent}%`,
-              top: dec.hotspot_id ? '50%' : `${dec.y_percent}%`,
-              width: dec.hotspot_id ? `${(dec.size || 1) * 100}%` : `${(dec.size || 1) * 60}px`,
-              height: dec.hotspot_id ? `${(dec.size || 1) * 100}%` : `${(dec.size || 1) * 60}px`,
-              transform: 'translate(-50%, -50%)',
+              left: leftPos,
+              top: topPos,
+              width: isHotspot ? `${(dec.size || 1) * 100}%` : `${(dec.size || 1) * 60}px`,
+              height: isHotspot ? `${(dec.size || 1) * 100}%` : `${(dec.size || 1) * 60}px`,
+              transform: transformStr,
               zIndex: 10,
               pointerEvents: isStudio ? 'auto' : 'none',
               userSelect: 'none',
