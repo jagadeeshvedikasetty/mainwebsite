@@ -26,21 +26,21 @@ export default function Navbar() {
           {isMenuOpen ? '✕' : '☰'}
         </button>
 
-        <Link href="/" className="logo-link" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '150px', height: '70px', textDecoration: 'none' }}>
+        <Link href="/" className="logo-link" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100px', height: '100px', textDecoration: 'none' }}>
           <div id="hotspot-header-logo-left" className="hotspot-small" style={{ position: 'absolute', top: 0, left: '-24px', zIndex: 50 }}></div>
           
           <svg className="rotating-text-svg" viewBox="0 0 100 100">
             <defs>
-              <path id="circlePath" d="M 50, 50 m -42, 0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" />
+              <path id="circlePath" d="M 50, 50 m -44, 0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0" />
             </defs>
-            <text fontSize="11" fontWeight="bold" letterSpacing="2" fill="#d97706">
+            <text fontSize="11" fontWeight="bold" letterSpacing="1.8" fill="#d97706">
               <textPath href="#circlePath" startOffset="0%">
                 JANANI HOME FOODS • AUTHENTIC TASTE • 
               </textPath>
             </text>
           </svg>
           
-          <Image src="/logo.png" alt="Janani Home Foods Logo" width={110} height={50} className="logo-img" style={{ position: 'relative', zIndex: 10, background: 'rgba(255,255,255,0.8)', borderRadius: '10px', padding: '4px' }} />
+          <Image src="/logo.png" alt="Janani Home Foods Logo" width={65} height={65} className="logo-img" style={{ position: 'relative', zIndex: 10, background: 'rgba(255,255,255,0.8)', borderRadius: '50%', padding: '4px', objectFit: 'contain' }} />
           
           <div id="hotspot-header-logo-right" className="hotspot-small" style={{ position: 'absolute', top: 0, right: '-24px', zIndex: 50 }}></div>
         </Link>
