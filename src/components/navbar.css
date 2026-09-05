@@ -67,3 +67,16 @@
     display: none; /* Hide text like "(0)" in cart icon on mobile to save space */
   }
 }
+
+@keyframes spin-circle {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.rotating-text {
+  animation: spin-circle 15s linear infinite;
+}
