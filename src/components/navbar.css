@@ -77,6 +77,14 @@
   }
 }
 
-.rotating-text {
+.rotating-text-svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140px;
+  height: 140px;
+  z-index: 0;
+  pointer-events: none;
   animation: spin-circle 15s linear infinite;
+  transform: translate(-50%, -50%);
 }

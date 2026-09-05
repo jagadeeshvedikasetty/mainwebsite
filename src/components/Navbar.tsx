@@ -26,23 +26,23 @@ export default function Navbar() {
           {isMenuOpen ? '✕' : '☰'}
         </button>
 
-        <Link href="/" className="logo-link relative flex items-center justify-center w-40 h-16">
-          <div id="hotspot-header-logo-left" className="hotspot-small absolute top-0 -left-6 z-50"></div>
+        <Link href="/" className="logo-link" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '150px', height: '70px', textDecoration: 'none' }}>
+          <div id="hotspot-header-logo-left" className="hotspot-small" style={{ position: 'absolute', top: 0, left: '-24px', zIndex: 50 }}></div>
           
-          <svg className="rotating-text absolute z-0 w-32 h-32 text-orange-600" viewBox="0 0 100 100" style={{ pointerEvents: 'none', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+          <svg className="rotating-text-svg" viewBox="0 0 100 100">
             <defs>
-              <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" />
+              <path id="circlePath" d="M 50, 50 m -42, 0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" />
             </defs>
-            <text fontSize="10.5" fontWeight="bold" letterSpacing="1.8" fill="var(--primary-color)">
+            <text fontSize="11" fontWeight="bold" letterSpacing="2" fill="#d97706">
               <textPath href="#circlePath" startOffset="0%">
                 JANANI HOME FOODS • AUTHENTIC TASTE • 
               </textPath>
             </text>
           </svg>
           
-          <Image src="/logo.png" alt="Janani Home Foods Logo" width={110} height={50} className="logo-img relative z-10" />
+          <Image src="/logo.png" alt="Janani Home Foods Logo" width={110} height={50} className="logo-img" style={{ position: 'relative', zIndex: 10, background: 'rgba(255,255,255,0.8)', borderRadius: '10px', padding: '4px' }} />
           
-          <div id="hotspot-header-logo-right" className="hotspot-small absolute top-0 -right-6 z-50"></div>
+          <div id="hotspot-header-logo-right" className="hotspot-small" style={{ position: 'absolute', top: 0, right: '-24px', zIndex: 50 }}></div>
         </Link>
 
         <div className={`nav-links ${isMenuOpen ? 'nav-links-open' : ''}`}>
