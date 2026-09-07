@@ -56,7 +56,7 @@ export default function Navbar() {
         
         <div className="nav-actions">
           <button className="icon-btn" aria-label="Search">🔍</button>
-          <button className="icon-btn" aria-label="Account">👤</button>
+          <Link href="/account" className="icon-btn" aria-label="Account" style={{ textDecoration: 'none' }}>👤</Link>
           <Link href="/cart" className="icon-btn" aria-label="Cart" style={{ textDecoration: 'none' }}>🛒 <span>({mounted ? totalItems : 0})</span></Link>
         </div>
       </div>
