@@ -31,46 +31,49 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
     .eq('auth_id', user.id)
     .single()
 
-  if (error || !customer) {
-    // If auth succeeds but no customer record exists, let them complete their profile.
-    return (
-      <div className="account-container">
-        <div className="profile-fallback">
-          <h1>Complete Your Profile</h1>
-          <p>Your account exists, but we need a few more details to set up your customer dashboard.</p>
-          
-          <form action={completeProfile}>
-            <div className="detail-group">
-              <label htmlFor="name">Full Name</label>
-              <input type="text" name="name" id="name" required placeholder="e.g. John Doe" />
-            </div>
-            <div className="detail-group">
-              <label htmlFor="phone">Phone Number</label>
-              <input type="tel" name="phone" id="phone" required placeholder="e.g. +91 9876543210" />
-            </div>
-            
-            {searchParams?.error && (
-              <div className="auth-error" style={{ color: 'red', marginTop: '10px' }}>
-                {searchParams.error}
-              </div>
-            )}
+  let currentCustomer = customer;
 
-            <button type="submit" className="btn-save">Save Profile</button>
-          </form>
-          
-          <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #eee' }}>
-            <form action={logout}>
-              <button type="submit" style={{ background: 'none', border: 'none', color: '#666', textDecoration: 'underline', cursor: 'pointer' }}>
-                Sign Out instead
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
+  if (error || !customer) {
+    // If auth succeeds but no customer record exists, auto-create it securely
+    const { createClient: createSupabaseClient } = require('@supabase/supabase-js')
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
     )
+
+    const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Customer'
+    const phone = user.user_metadata?.phone || ''
+
+    const { data: newCustomer, error: insertError } = await supabaseAdmin
+      .from('customers')
+      .insert({
+        auth_id: user.id,
+        email: user.email,
+        name: name,
+        phone: phone,
+      })
+      .select()
+      .single()
+
+    if (insertError) {
+      console.error('Failed to auto-create customer profile:', insertError)
+      return (
+        <div className="account-container text-center py-12">
+          <h1>Account Setup Error</h1>
+          <p>We could not link your account profile. Please contact support.</p>
+          <form action={logout} className="mt-4">
+            <button type="submit" className="account-link">Sign Out</button>
+          </form>
+        </div>
+      )
+    }
+
+    currentCustomer = newCustomer
+    // Initialize empty orders for a brand new auto-created profile
+    currentCustomer.orders = []
   }
 
-  const orders = customer.orders || []
+  const orders = currentCustomer.orders || []
   orders.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 
   const activeOrders = orders.filter((o: any) => ['pending', 'processing'].includes(o.status?.toLowerCase()))
@@ -111,8 +114,8 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
         {/* Header Section */}
         <div className="account-header">
           <div className="account-header-info">
-            <h1>Welcome, {customer.name}</h1>
-            <p>{customer.email} • {customer.phone}</p>
+            <h1>Welcome, {currentCustomer.name}</h1>
+            <p>{currentCustomer.email} • {currentCustomer.phone}</p>
           </div>
           <form action={logout}>
             <button type="submit" className="account-logout-btn">
@@ -154,15 +157,15 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
               
               <div className="detail-group">
                 <p>Name</p>
-                <p>{customer.name}</p>
+                <p>{currentCustomer.name}</p>
               </div>
               <div className="detail-group">
                 <p>Email</p>
-                <p>{customer.email}</p>
+                <p>{currentCustomer.email}</p>
               </div>
               <div className="detail-group">
                 <p>Phone</p>
-                <p>{customer.phone}</p>
+                <p>{currentCustomer.phone}</p>
               </div>
 
               <h3 style={{ marginTop: '2rem', marginBottom: '1rem', paddingTop: '1.5rem', borderTop: '1px solid #e5e7eb' }}>
