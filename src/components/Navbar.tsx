@@ -26,7 +26,7 @@ export default function Navbar() {
           {isMenuOpen ? '✕' : '☰'}
         </button>
 
-        <Link href="/" className="logo-link" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100px', height: '100px', textDecoration: 'none' }}>
+        <Link href="/" className="logo-link">
           <div id="hotspot-header-logo-left" className="hotspot-small" style={{ position: 'absolute', top: 0, left: '-24px', zIndex: 50 }}></div>
           
           <svg className="rotating-text-svg" viewBox="0 0 100 100">
@@ -40,7 +40,7 @@ export default function Navbar() {
             </text>
           </svg>
           
-          <Image src="/logo.png" alt="Janani Home Foods Logo" width={65} height={65} className="logo-img" style={{ position: 'relative', zIndex: 10, background: 'rgba(255,255,255,0.8)', borderRadius: '50%', padding: '4px', objectFit: 'contain' }} />
+          <Image src="/logo.png" alt="Janani Home Foods Logo" width={65} height={65} className="logo-img" />
           
           <div id="hotspot-header-logo-right" className="hotspot-small" style={{ position: 'absolute', top: 0, right: '-24px', zIndex: 50 }}></div>
         </Link>
