@@ -44,25 +44,50 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
     const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Customer'
     const phone = user.user_metadata?.phone || ''
 
-    const { data: newCustomer, error: insertError } = await supabaseAdmin
+    // First check if a customer record already exists for this email
+    const { data: existingCustomer } = await supabaseAdmin
       .from('customers')
-      .insert({
-        auth_id: user.id,
-        email: user.email,
-        name: name,
-        phone: phone,
-      })
-      .select()
+      .select('id')
+      .eq('email', user.email)
       .single()
 
-    if (insertError) {
-      console.error('Failed to auto-create customer profile:', insertError)
+    let newCustomer = null
+    let dbError = null
+
+    if (existingCustomer) {
+      // Update existing record with this auth_id
+      const { data, error } = await supabaseAdmin
+        .from('customers')
+        .update({ auth_id: user.id })
+        .eq('id', existingCustomer.id)
+        .select()
+        .single()
+      newCustomer = data
+      dbError = error
+    } else {
+      // Create entirely new record
+      const { data, error } = await supabaseAdmin
+        .from('customers')
+        .insert({
+          auth_id: user.id,
+          email: user.email,
+          name: name,
+          phone: phone,
+        })
+        .select()
+        .single()
+      newCustomer = data
+      dbError = error
+    }
+
+    if (dbError || !newCustomer) {
+      console.error('Failed to auto-create or link customer profile:', dbError)
       return (
         <div className="account-container text-center py-12">
           <h1 style={{ color: 'red', fontSize: '2rem', marginBottom: '1rem' }}>Account Setup Error</h1>
           <p>We could not link your account profile. Please contact support.</p>
           <div style={{ background: '#fef2f2', color: '#b91c1c', padding: '1rem', margin: '2rem auto', maxWidth: '500px', borderRadius: '0.5rem', textAlign: 'left', fontFamily: 'monospace' }}>
-            <strong>Error Details:</strong> {insertError.message || JSON.stringify(insertError)}
+            <strong>Error Details:</strong> {dbError?.message || JSON.stringify(dbError)}
           </div>
           <form action={logout} className="mt-4">
             <button type="submit" className="account-link">Sign Out</button>
