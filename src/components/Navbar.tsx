@@ -30,11 +30,11 @@ export default function Navbar() {
           <div id="hotspot-header-logo-left" className="hotspot-small" style={{ position: 'absolute', top: 0, left: '-24px', zIndex: 50 }}></div>
           
           <div className="logo-animation-wrapper">
-            <svg className="rotating-text-svg" viewBox="0 0 100 100">
+            <svg className="rotating-text-svg" viewBox="0 0 120 120">
               <defs>
-                <path id="circlePath" d="M 50, 50 m -46, 0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0" />
+                <path id="circlePath" d="M 60, 60 m -50, 0 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0" />
               </defs>
-              <text fontSize="10" fontWeight="bold" letterSpacing="1.8" fill="#d97706">
+              <text fontSize="11" fontWeight="bold" letterSpacing="1.8" fill="#d97706">
                 <textPath href="#circlePath" startOffset="0%">
                   JANANI HOME FOODS • AUTHENTIC •
                 </textPath>
