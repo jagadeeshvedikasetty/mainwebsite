@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Lottie } from 'lottie-react';
+import dynamic from 'next/dynamic';
+const Lottie: any = dynamic(() => import('lottie-react').then((mod) => mod.Lottie as any), { ssr: false });
 import logoAnimation from '../assets/logo-animation.json';
 import { useCartStore } from '../store/cartStore';
 import './navbar.css';
@@ -31,7 +32,14 @@ export default function Navbar() {
         <Link href="/" className="logo-link">
           <div id="hotspot-header-logo-left" className="hotspot-small" style={{ position: 'absolute', top: 0, left: '-24px', zIndex: 50 }}></div>
           
-          <Lottie src={logoAnimation} autoplay loop className="logo-animation-lottie" />
+          {/* @ts-ignore */}
+          <Lottie 
+            animationData={logoAnimation} 
+            autoplay 
+            loop 
+            className="logo-animation-lottie"
+            style={{ width: '100%', height: '100%' }}
+          />
           
           <div id="hotspot-header-logo-right" className="hotspot-small" style={{ position: 'absolute', top: 0, right: '-24px', zIndex: 50 }}></div>
         </Link>
