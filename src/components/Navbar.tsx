@@ -34,7 +34,7 @@ export default function Navbar() {
           
           {/* @ts-ignore */}
           <Lottie 
-            animationData={logoAnimation} 
+            src={logoAnimation} 
             autoplay 
             loop 
             className="logo-animation-lottie"
