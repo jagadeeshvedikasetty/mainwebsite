@@ -3,7 +3,7 @@ import { signup } from '../login/actions'
 import '../login/login.css'
 
 export default async function RegisterPage(props: {
-  searchParams: Promise<{ message: string }>
+  searchParams: Promise<{ message: string, code: string }>
 }) {
   const searchParams = await props.searchParams;
   return (
@@ -46,17 +46,6 @@ export default async function RegisterPage(props: {
           </div>
 
           <div className="form-group">
-            <label htmlFor="phone">Phone Number</label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              required
-              placeholder="e.g. +91 9876543210"
-            />
-          </div>
-
-          <div className="form-group">
             <label htmlFor="password">Create Password</label>
             <input
               id="password"
@@ -68,11 +57,19 @@ export default async function RegisterPage(props: {
             />
           </div>
 
-          {searchParams?.message && (
+          {searchParams?.code === 'exists' ? (
+            <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg text-sm text-center">
+              <p className="font-semibold mb-2" style={{ fontWeight: 600, color: '#b91c1c' }}>This email is already registered.</p>
+              <p>
+                <Link href="/login" style={{ color: '#d97706', textDecoration: 'underline' }}>Log in</Link> or{' '}
+                <Link href="/reset-password" style={{ color: '#d97706', textDecoration: 'underline' }}>Reset your password</Link>
+              </p>
+            </div>
+          ) : searchParams?.message ? (
             <div className={searchParams.message.includes('Success!') ? 'bg-green-50 text-green-700 p-3 rounded text-sm text-center border border-green-200' : 'auth-error'}>
               {searchParams.message}
             </div>
-          )}
+          ) : null}
 
           <button type="submit" className="auth-submit-btn">
             Create Account

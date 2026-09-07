@@ -31,9 +31,25 @@ export async function signup(formData: FormData) {
     options: {
       data: {
         full_name: formData.get('name') as string,
-        phone: formData.get('phone') as string,
       }
     }
+  }
+
+  // Pre-Signup Duplicate Check
+  const { createClient: createSupabaseClient } = require('@supabase/supabase-js')
+  const supabaseAdmin = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  const { data: existingCustomer } = await supabaseAdmin
+    .from('customers')
+    .select('id')
+    .eq('email', data.email)
+    .single()
+
+  if (existingCustomer) {
+    redirect('/register?message=This email is already registered.&code=exists')
   }
 
   const { data: authData, error } = await supabase.auth.signUp(data)
@@ -44,17 +60,11 @@ export async function signup(formData: FormData) {
 
   // After successful signup, we must create a customer record
   if (authData.user) {
-    const { createClient: createSupabaseClient } = require('@supabase/supabase-js')
-    const supabaseAdmin = createSupabaseClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    )
-    
     const { error: insertError } = await supabaseAdmin.from('customers').insert({
       auth_id: authData.user.id,
       email: data.email,
       name: formData.get('name') as string,
-      phone: formData.get('phone') as string,
+      phone: '', // Setting to empty string as phone is no longer required during signup
     })
     
     if (insertError) {
