@@ -32,15 +32,15 @@ export default function Navbar() {
           <div className="logo-animation-wrapper">
             <svg className="rotating-text-svg" viewBox="0 0 100 100">
               <defs>
-                <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" />
+                <path id="circlePath" d="M 50, 50 m -46, 0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0" />
               </defs>
-              <text fontSize="12" fontWeight="bold" letterSpacing="2.5" fill="#d97706">
+              <text fontSize="10" fontWeight="bold" letterSpacing="1.8" fill="#d97706">
                 <textPath href="#circlePath" startOffset="0%">
                   JANANI HOME FOODS • AUTHENTIC •
                 </textPath>
               </text>
             </svg>
-            <Image src="/logo.png" alt="Janani Home Foods Logo" width={65} height={65} className="logo-img" />
+            <Image src="/logo.png" alt="Janani Home Foods Logo" width={64} height={64} className="logo-img" />
           </div>
           
           <div id="hotspot-header-logo-right" className="hotspot-small" style={{ position: 'absolute', top: 0, right: '-24px', zIndex: 50 }}></div>
