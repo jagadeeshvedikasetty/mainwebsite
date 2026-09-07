@@ -59,8 +59,11 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
       console.error('Failed to auto-create customer profile:', insertError)
       return (
         <div className="account-container text-center py-12">
-          <h1>Account Setup Error</h1>
+          <h1 style={{ color: 'red', fontSize: '2rem', marginBottom: '1rem' }}>Account Setup Error</h1>
           <p>We could not link your account profile. Please contact support.</p>
+          <div style={{ background: '#fef2f2', color: '#b91c1c', padding: '1rem', margin: '2rem auto', maxWidth: '500px', borderRadius: '0.5rem', textAlign: 'left', fontFamily: 'monospace' }}>
+            <strong>Error Details:</strong> {insertError.message || JSON.stringify(insertError)}
+          </div>
           <form action={logout} className="mt-4">
             <button type="submit" className="account-link">Sign Out</button>
           </form>
