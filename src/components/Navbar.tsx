@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Lottie from 'lottie-react';
+import { Lottie } from 'lottie-react';
 import logoAnimation from '../assets/logo-animation.json';
 import { useCartStore } from '../store/cartStore';
 import './navbar.css';
@@ -31,7 +31,7 @@ export default function Navbar() {
         <Link href="/" className="logo-link">
           <div id="hotspot-header-logo-left" className="hotspot-small" style={{ position: 'absolute', top: 0, left: '-24px', zIndex: 50 }}></div>
           
-          <Lottie animationData={logoAnimation} loop={true} className="logo-animation-lottie" />
+          <Lottie src={logoAnimation} autoplay loop className="logo-animation-lottie" />
           
           <Image src="/logo.png" alt="Janani Home Foods Logo" width={65} height={65} className="logo-img" />
           
