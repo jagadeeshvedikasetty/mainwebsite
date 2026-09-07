@@ -33,8 +33,6 @@ export default function Navbar() {
           
           <Lottie src={logoAnimation} autoplay loop className="logo-animation-lottie" />
           
-          <Image src="/logo.png" alt="Janani Home Foods Logo" width={65} height={65} className="logo-img" />
-          
           <div id="hotspot-header-logo-right" className="hotspot-small" style={{ position: 'absolute', top: 0, right: '-24px', zIndex: 50 }}></div>
         </Link>
 
