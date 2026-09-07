@@ -12,7 +12,14 @@ export async function completeProfile(formData: FormData) {
     redirect('/login')
   }
 
-  const { error } = await supabase.from('customers').insert({
+  // Use service role key to bypass RLS when creating the initial profile
+  const { createClient: createSupabaseClient } = require('@supabase/supabase-js')
+  const supabaseAdmin = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  const { error } = await supabaseAdmin.from('customers').insert({
     auth_id: user.id,
     email: user.email,
     name: formData.get('name') as string,

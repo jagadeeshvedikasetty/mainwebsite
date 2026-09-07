@@ -44,7 +44,13 @@ export async function signup(formData: FormData) {
 
   // After successful signup, we must create a customer record
   if (authData.user) {
-    const { error: insertError } = await supabase.from('customers').insert({
+    const { createClient: createSupabaseClient } = require('@supabase/supabase-js')
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+    
+    const { error: insertError } = await supabaseAdmin.from('customers').insert({
       auth_id: authData.user.id,
       email: data.email,
       name: formData.get('name') as string,
