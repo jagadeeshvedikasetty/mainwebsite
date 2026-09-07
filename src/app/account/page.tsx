@@ -3,7 +3,10 @@ import Link from 'next/link'
 import { createClient } from '@/utils/supabase/server'
 import { logout } from '../login/actions'
 
-export default async function AccountDashboard() {
+import { completeProfile } from './actions'
+
+export default async function AccountDashboard(props: { searchParams: Promise<{ error?: string }> }) {
+  const searchParams = await props.searchParams
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -29,22 +32,39 @@ export default async function AccountDashboard() {
     .single()
 
   if (error || !customer) {
-    // If auth succeeds but no customer record exists, we should let them complete their profile.
+    // If auth succeeds but no customer record exists, let them complete their profile.
     return (
       <div className="min-h-screen bg-[#FDFBF7] py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center space-y-6 bg-white p-8 rounded-2xl shadow-sm border border-orange-100">
-          <h1 className="text-2xl font-bold text-gray-900">Complete Your Profile</h1>
-          <p className="text-gray-600">Your account exists, but we need a few more details to set up your customer dashboard.</p>
-          
-          <div className="pt-6">
-            <Link href="/register" className="px-6 py-3 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 transition-colors">
-              Set Up Profile
-            </Link>
+        <div className="max-w-md mx-auto space-y-6 bg-white p-8 rounded-2xl shadow-sm border border-orange-100">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-900">Complete Your Profile</h1>
+            <p className="text-gray-600 mt-2 text-sm">Your account exists, but we need a few more details to set up your customer dashboard.</p>
           </div>
           
-          <div className="pt-8 border-t border-gray-100 mt-8">
+          <form action={completeProfile} className="space-y-4 pt-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+              <input type="text" name="name" id="name" required className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="e.g. John Doe" />
+            </div>
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+              <input type="tel" name="phone" id="phone" required className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="e.g. +91 9876543210" />
+            </div>
+            
+            {searchParams?.error && (
+              <div className="bg-red-50 text-red-700 p-3 rounded text-sm text-center">
+                {searchParams.error}
+              </div>
+            )}
+
+            <button type="submit" className="w-full py-3 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 transition-colors">
+              Save Profile
+            </button>
+          </form>
+          
+          <div className="pt-6 border-t border-gray-100 mt-6 text-center">
             <form action={logout}>
-              <button type="submit" className="text-sm text-gray-500 hover:text-gray-900 underline">Sign Out</button>
+              <button type="submit" className="text-sm text-gray-500 hover:text-gray-900 underline">Sign Out instead</button>
             </form>
           </div>
         </div>

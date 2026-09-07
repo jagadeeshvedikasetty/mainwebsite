@@ -2,11 +2,10 @@ import Link from 'next/link'
 import { signup } from '../login/actions'
 import '../login/login.css'
 
-export default function RegisterPage({
-  searchParams,
-}: {
-  searchParams: { message: string }
+export default async function RegisterPage(props: {
+  searchParams: Promise<{ message: string }>
 }) {
+  const searchParams = await props.searchParams;
   return (
     <div className="auth-page-container">
       <div className="auth-card">
@@ -70,7 +69,7 @@ export default function RegisterPage({
           </div>
 
           {searchParams?.message && (
-            <div className="auth-error">
+            <div className={searchParams.message.includes('Success!') ? 'bg-green-50 text-green-700 p-3 rounded text-sm text-center border border-green-200' : 'auth-error'}>
               {searchParams.message}
             </div>
           )}

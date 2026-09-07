@@ -2,11 +2,10 @@ import Link from 'next/link'
 import '../login/login.css'
 import { resetPassword } from './actions'
 
-export default function ResetPasswordPage({
-  searchParams,
-}: {
-  searchParams: { message: string }
+export default async function ResetPasswordPage(props: {
+  searchParams: Promise<{ message: string }>
 }) {
+  const searchParams = await props.searchParams;
   return (
     <div className="auth-page-container">
       <div className="auth-card">

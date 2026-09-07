@@ -44,12 +44,22 @@ export async function signup(formData: FormData) {
 
   // After successful signup, we must create a customer record
   if (authData.user) {
-    await supabase.from('customers').insert({
+    const { error: insertError } = await supabase.from('customers').insert({
       auth_id: authData.user.id,
       email: data.email,
       name: formData.get('name') as string,
       phone: formData.get('phone') as string,
     })
+    
+    if (insertError) {
+      console.error('Failed to create customer record during signup:', insertError)
+    }
+  }
+
+  // If Supabase is configured to require email confirmations (default), 
+  // authData.session will be null.
+  if (!authData.session) {
+    redirect('/register?message=Success! Please check your email inbox to confirm your registration before logging in.')
   }
 
   revalidatePath('/', 'layout')
