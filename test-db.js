@@ -10,17 +10,12 @@ envFile.split('\n').forEach(line => {
 
 const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
 
-async function testInsert() {
-  const { data: customer } = await supabase.from('customers').select('id').limit(1).single();
-  
-  const { data, error } = await supabase.from('orders').insert({
-    customer_id: customer?.id,
-    total_amount: 100,
-    status: 'Pending',
-    shipping_address: 'Test'
-  }).select().single();
-  
-  console.log('Error:', error);
+async function checkOrders() {
+  const { data: customers } = await supabase.from('customers').select('id, email, name');
+  console.log('Customers:', customers);
+
+  const { data: orders } = await supabase.from('orders').select('*');
+  console.log('Orders:', orders);
 }
 
-testInsert();
+checkOrders();

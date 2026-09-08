@@ -140,6 +140,11 @@
   color: #166534;
 }
 
+.status-processing {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
 .status-cancelled {
   background: #fee2e2;
   color: #991b1b;

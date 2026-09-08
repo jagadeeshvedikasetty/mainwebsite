@@ -112,8 +112,18 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
 
   const OrderCard = ({ order }: { order: any }) => {
     let statusClass = 'status-pending'
-    if (order.status?.toLowerCase() === 'completed') statusClass = 'status-completed'
-    if (order.status?.toLowerCase() === 'cancelled') statusClass = 'status-cancelled'
+    let displayStatus = 'Not Placed'
+
+    if (order.status?.toLowerCase() === 'completed') {
+      statusClass = 'status-completed'
+      displayStatus = 'Placed'
+    } else if (order.status?.toLowerCase() === 'processing') {
+      statusClass = 'status-processing'
+      displayStatus = 'Processing'
+    } else if (order.status?.toLowerCase() === 'cancelled') {
+      statusClass = 'status-cancelled'
+      displayStatus = 'Cancelled'
+    }
 
     return (
       <div className="order-card">
@@ -124,7 +134,7 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
         </div>
         <div className="order-actions">
           <span className={`order-status ${statusClass}`}>
-            {order.status?.toLowerCase() === 'completed' ? 'Placed' : 'Not Placed'}
+            {displayStatus}
           </span>
           <Link href={`/account/orders/${order.id}`} className="account-link">
             View Invoice
