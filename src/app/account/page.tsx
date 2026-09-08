@@ -16,17 +16,10 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
   }
 
   // Fetch customer details and their orders
+  // Fetch customer details
   const { data: customer, error } = await supabase
     .from('customers')
-    .select(`
-      *,
-      orders (
-        id,
-        created_at,
-        total_amount,
-        status
-      )
-    `)
+    .select('*')
     .eq('auth_id', user.id)
     .single()
 
@@ -96,11 +89,21 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
     }
 
     currentCustomer = newCustomer
-    // Initialize empty orders for a brand new auto-created profile
-    currentCustomer.orders = []
   }
 
-  const orders = currentCustomer.orders || []
+  // Fetch orders using Admin client to bypass any Row Level Security restrictions
+  const { createClient: createSupabaseClient } = require('@supabase/supabase-js')
+  const supabaseAdminForOrders = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  const { data: fetchedOrders } = await supabaseAdminForOrders
+    .from('orders')
+    .select('id, created_at, total_amount, status')
+    .eq('customer_id', currentCustomer.id)
+
+  const orders = fetchedOrders || []
   orders.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 
   // Calculate stats
