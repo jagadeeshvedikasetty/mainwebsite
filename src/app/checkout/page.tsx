@@ -43,34 +43,34 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl min-h-[70vh]">
-      <h1 className="text-3xl font-bold mb-8 text-[#4a2e1b]">Checkout</h1>
+    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '60px 20px', minHeight: '70vh' }}>
+      <h1 className="font-traditional" style={{ fontSize: '2.5rem', marginBottom: '30px', color: 'var(--heading-color)' }}>Checkout</h1>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px' }}>
         
         {/* Shipping Form */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <h2 className="text-xl font-semibold mb-6 border-b pb-2">Shipping Information</h2>
-          <form action={handleSubmit} className="space-y-4">
+        <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+          <h2 style={{ fontSize: '1.5rem', marginBottom: '20px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>Shipping Information</h2>
+          <form action={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Full Delivery Address</label>
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: '#444' }}>Full Delivery Address</label>
               <textarea 
                 name="address"
                 required
                 rows={4}
-                className="w-full border border-gray-300 rounded p-2 focus:ring-orange-500 focus:border-orange-500"
+                style={{ width: '100%', padding: '12px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '1rem', fontFamily: 'inherit' }}
                 placeholder="123 Main St, Apt 4B, City, State, ZIP"
               ></textarea>
             </div>
             
-            <div className="bg-blue-50 p-4 rounded text-sm text-blue-800 border border-blue-100">
+            <div style={{ backgroundColor: '#f0f7ff', color: '#0369a1', padding: '15px', borderRadius: '4px', fontSize: '0.9rem', border: '1px solid #bae6fd' }}>
               <strong>Note:</strong> We are currently only accepting Cash on Delivery (COD) for testing purposes.
             </div>
 
             <button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded mt-6 transition-colors"
+              style={{ width: '100%', padding: '15px', backgroundColor: 'var(--secondary-color)', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 'bold', fontSize: '1.1rem', marginTop: '15px', cursor: 'pointer' }}
             >
               {isSubmitting ? 'Placing Order...' : 'Place Order (COD)'}
             </button>
@@ -78,22 +78,22 @@ export default function CheckoutPage() {
         </div>
 
         {/* Order Summary */}
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 h-fit">
-          <h2 className="text-xl font-semibold mb-6 border-b pb-2">Order Summary</h2>
-          <div className="space-y-4 mb-6">
+        <div style={{ backgroundColor: '#fafafa', padding: '30px', borderRadius: '8px', border: '1px solid #eee', height: 'fit-content' }}>
+          <h2 style={{ fontSize: '1.5rem', marginBottom: '20px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>Order Summary</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginBottom: '25px' }}>
             {items.map(item => (
-              <div key={`${item.id}-${item.variant}`} className="flex justify-between text-sm">
+              <div key={`${item.id}-${item.variant}`} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.95rem' }}>
                 <div>
-                  <span className="font-medium text-gray-800">{item.name}</span>
-                  <span className="text-gray-500 ml-2">x{item.quantity}</span>
+                  <span style={{ fontWeight: '500', color: '#333' }}>{item.name}</span>
+                  <span style={{ color: '#888', marginLeft: '8px' }}>x{item.quantity}</span>
                 </div>
-                <span className="text-gray-900 font-medium">₹{(item.price * item.quantity).toFixed(2)}</span>
+                <span style={{ fontWeight: '500', color: '#111' }}>₹{(item.price * item.quantity).toFixed(2)}</span>
               </div>
             ))}
           </div>
-          <div className="border-t pt-4 flex justify-between font-bold text-lg text-gray-900">
+          <div style={{ borderTop: '2px solid #eee', paddingTop: '15px', display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--heading-color)' }}>
             <span>Total to Pay:</span>
-            <span>₹{total.toFixed(2)}</span>
+            <span style={{ color: 'var(--primary-color)' }}>₹{total.toFixed(2)}</span>
           </div>
         </div>
 
