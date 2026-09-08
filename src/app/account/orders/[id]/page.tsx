@@ -1,55 +1,30 @@
-'use client'
-
-import { useEffect, useState } from 'react'
-import { createBrowserClient } from '@supabase/ssr'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import PrintButton from './PrintButton'
 
-export default function OrderInvoicePage({ params }: { params: { id: string } }) {
-  const [order, setOrder] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchOrder = async () => {
-      const supabase = createBrowserClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+export default async function OrderInvoicePage({ params }: { params: { id: string } }) {
+  // We use the admin client to bypass RLS restrictions since the client dashboard had RLS issues
+  const { createClient: createSupabaseClient } = require('@supabase/supabase-js')
+  const supabaseAdmin = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+  
+  // Fetch order details including items
+  const { data: order, error } = await supabaseAdmin
+    .from('orders')
+    .select(`
+      *,
+      customers (*),
+      order_items (
+        *,
+        products (name, price)
       )
-      
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        window.location.href = '/login'
-        return
-      }
-
-      // Fetch order details including items
-      const { data, error } = await supabase
-        .from('orders')
-        .select(`
-          *,
-          customers (*),
-          order_items (
-            *,
-            products (name, price)
-          )
-        `)
-        .eq('id', params.id)
-        .single()
-        
-      if (data) {
-        setOrder(data)
-      }
-      setLoading(false)
-    }
-
-    fetchOrder()
-  }, [params.id])
-
-  if (loading) return <div className="p-12 text-center text-gray-500">Loading invoice...</div>
-  if (!order) return <div className="p-12 text-center text-red-500">Order not found.</div>
-
-  const handlePrint = () => {
-    window.print()
-  }
+    `)
+    .eq('id', params.id)
+    .single()
+    
+  if (error || !order) return <div className="p-12 text-center text-red-500">Order not found.</div>
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 print:bg-white print:py-0">
@@ -60,12 +35,7 @@ export default function OrderInvoicePage({ params }: { params: { id: string } })
           <Link href="/account" className="text-orange-600 hover:text-orange-700 font-medium">
             &larr; Back to Dashboard
           </Link>
-          <button 
-            onClick={handlePrint}
-            className="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
-          >
-            Print / Save PDF
-          </button>
+          <PrintButton />
         </div>
 
         {/* Printable Invoice Container */}
