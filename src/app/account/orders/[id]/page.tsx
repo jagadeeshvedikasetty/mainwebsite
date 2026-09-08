@@ -3,7 +3,8 @@ import { redirect } from 'next/navigation'
 import Image from 'next/image'
 import PrintButton from './PrintButton'
 
-export default async function OrderInvoicePage({ params }: { params: { id: string } }) {
+export default async function OrderInvoicePage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
   // We use the admin client to bypass RLS restrictions since the client dashboard had RLS issues
   const { createClient: createSupabaseClient } = require('@supabase/supabase-js')
   const supabaseAdmin = createSupabaseClient(
