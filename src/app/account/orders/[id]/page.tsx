@@ -45,14 +45,14 @@ export default async function OrderInvoicePage(props: { params: Promise<{ id: st
 
   return (
     <div className="invoice-wrapper">
-      <div className="invoice-container">
+      <div className="invoice-container" id="invoice-content">
         
         {/* Navigation & Actions (Hidden when printing) */}
         <div className="invoice-nav print-hidden">
           <Link href="/account" className="invoice-back-link">
             &larr; Back to Dashboard
           </Link>
-          <PrintButton />
+          <PrintButton orderId={order.id.split('-')[0].toUpperCase()} />
         </div>
 
         {/* Header */}
