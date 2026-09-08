@@ -88,7 +88,6 @@ export async function placeOrder(formData: FormData) {
       customer_id: customer.id,
       total_amount: totalAmount,
       status: 'Pending',
-      payment_method: 'Cash on Delivery',
       shipping_address: shippingAddress
     })
     .select()

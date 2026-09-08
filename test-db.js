@@ -1,18 +1,26 @@
-import { createClient } from '@supabase/supabase-js';
+const { createClient } = require('@supabase/supabase-js');
+const fs = require('fs');
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+const envFile = fs.readFileSync('.env.local', 'utf8');
+const env = {};
+envFile.split('\n').forEach(line => {
+  const [k, ...v] = line.split('=');
+  if(k && v) env[k.trim()] = v.join('=').trim().replace(/^\"|\"$/g, '');
+});
 
-async function test() {
-  const { data, error } = await supabase.from('customers').insert({
-    auth_id: '00000000-0000-0000-0000-000000000000',
-    email: 'test@example.com',
-    name: 'Test',
-    phone: '123'
-  });
+const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
+
+async function testInsert() {
+  const { data: customer } = await supabase.from('customers').select('id').limit(1).single();
+  
+  const { data, error } = await supabase.from('orders').insert({
+    customer_id: customer?.id,
+    total_amount: 100,
+    status: 'Pending',
+    shipping_address: 'Test'
+  }).select().single();
+  
   console.log('Error:', error);
 }
 
-test();
+testInsert();

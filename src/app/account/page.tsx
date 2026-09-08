@@ -24,8 +24,7 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
         id,
         created_at,
         total_amount,
-        status,
-        payment_method
+        status
       )
     `)
     .eq('auth_id', user.id)
