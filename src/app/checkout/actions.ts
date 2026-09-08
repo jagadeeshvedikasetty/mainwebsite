@@ -9,7 +9,7 @@ export async function placeOrder(formData: FormData) {
   // 1. Authenticate user
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
-    redirect('/login?message=Please log in to place an order')
+    return { success: false, message: 'Please log in to place an order' }
   }
 
   // 2. Fetch their customer record to get customer_id
@@ -20,14 +20,14 @@ export async function placeOrder(formData: FormData) {
     .single()
 
   if (!customer) {
-    redirect('/account?message=Please complete your profile first')
+    return { success: false, message: 'Please complete your profile first. Go to your Account Dashboard.' }
   }
 
   // 3. Extract form data
   const shippingAddress = formData.get('address') as string
   const cartDataStr = formData.get('cartData') as string
   if (!cartDataStr) {
-    redirect('/cart?message=Your cart is empty')
+    return { success: false, message: 'Your cart is empty' }
   }
 
   const items = JSON.parse(cartDataStr)
@@ -54,7 +54,7 @@ export async function placeOrder(formData: FormData) {
 
   if (orderError || !order) {
     console.error('Error creating order:', orderError)
-    redirect('/cart?message=Failed to place order. Please try again.')
+    return { success: false, message: 'Failed to place order. Please try again.' }
   }
 
   // 5. Create Order Items
@@ -71,7 +71,8 @@ export async function placeOrder(formData: FormData) {
 
   if (itemsError) {
     console.error('Error creating order items:', itemsError)
+    return { success: false, message: 'Order created but failed to save items.' }
   }
 
-  redirect('/account?message=Order placed successfully!')
+  return { success: true, message: 'Order placed successfully!' }
 }

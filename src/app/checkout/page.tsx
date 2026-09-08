@@ -35,10 +35,18 @@ export default function CheckoutPage() {
     formData.append('cartData', JSON.stringify(items))
     // Call server action
     try {
-      await placeOrder(formData)
-      clearCart() // if successful, the action will redirect, but we clear it anyway
+      const result = await placeOrder(formData)
+      if (result.success) {
+        clearCart()
+        router.push('/account?message=Order placed successfully!')
+      } else {
+        alert(result.message || 'Failed to place order')
+        setIsSubmitting(false)
+      }
     } catch (err) {
-      // Server actions redirect internally, this block might not execute if redirected.
+      console.error(err)
+      alert('An unexpected error occurred.')
+      setIsSubmitting(false)
     }
   }
 
