@@ -12,15 +12,57 @@ export async function placeOrder(formData: FormData) {
     return { success: false, message: 'Please log in to place an order' }
   }
 
-  // 2. Fetch their customer record to get customer_id
-  const { data: customer } = await supabase
+  // 2. Fetch or auto-create their customer record to get customer_id
+  let { data: customer } = await supabase
     .from('customers')
     .select('id')
     .eq('auth_id', user.id)
     .single()
 
   if (!customer) {
-    return { success: false, message: 'Please complete your profile first. Go to your Account Dashboard.' }
+    // Auto-create or link customer profile just like the dashboard does
+    const { createClient: createSupabaseClient } = require('@supabase/supabase-js')
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+
+    const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Customer'
+    const phone = user.user_metadata?.phone || ''
+
+    const { data: existingCustomer } = await supabaseAdmin
+      .from('customers')
+      .select('id')
+      .eq('email', user.email)
+      .single()
+
+    if (existingCustomer) {
+      // Update existing record with this auth_id
+      const { data } = await supabaseAdmin
+        .from('customers')
+        .update({ auth_id: user.id })
+        .eq('id', existingCustomer.id)
+        .select()
+        .single()
+      customer = data
+    } else {
+      // Create entirely new record
+      const { data } = await supabaseAdmin
+        .from('customers')
+        .insert({
+          auth_id: user.id,
+          email: user.email,
+          name: name,
+          phone: phone,
+        })
+        .select()
+        .single()
+      customer = data
+    }
+
+    if (!customer) {
+      return { success: false, message: 'Failed to create customer profile. Please contact support.' }
+    }
   }
 
   // 3. Extract form data
