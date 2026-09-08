@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import Image from 'next/image'
 import PrintButton from './PrintButton'
 
 export default async function OrderInvoicePage({ params }: { params: { id: string } }) {
@@ -57,13 +58,18 @@ export default async function OrderInvoicePage({ params }: { params: { id: strin
           
           {/* Header */}
           <div className="flex justify-between items-start border-b border-gray-200 pb-8 mb-8">
-            <div>
-              <h1 className="text-3xl font-serif font-bold text-orange-600">Janani Home Foods</h1>
-              <p className="text-sm text-gray-500 mt-1">Authentic Indian Sweets & Pickles</p>
-              <div className="mt-4 text-sm text-gray-600">
-                <p>123 Traditional Street</p>
-                <p>Hyderabad, TS 500001</p>
-                <p>contact@jananihomefoods.com</p>
+            <div className="flex gap-6 items-start">
+              <div className="w-24 h-24 relative overflow-hidden rounded-full border-2 border-orange-100">
+                <Image src="/logo.png" alt="Janani Home Foods Logo" fill style={{ objectFit: 'cover' }} />
+              </div>
+              <div>
+                <h1 className="text-3xl font-serif font-bold text-orange-600">Janani Home Foods</h1>
+                <p className="text-sm text-gray-500 mt-1">Authentic Indian Sweets & Pickles</p>
+                <div className="mt-4 text-sm text-gray-600">
+                  <p>123 Traditional Street</p>
+                  <p>Hyderabad, TS 500001</p>
+                  <p>contact@jananihomefoods.com</p>
+                </div>
               </div>
             </div>
             <div className="text-right">
