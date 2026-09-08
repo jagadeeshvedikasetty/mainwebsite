@@ -5,7 +5,7 @@ import { logout } from '../login/actions'
 import { completeProfile } from './actions'
 import './account.css'
 
-export default async function AccountDashboard(props: { searchParams: Promise<{ error?: string }> }) {
+export default async function AccountDashboard(props: { searchParams: Promise<{ error?: string, message?: string }> }) {
   const searchParams = await props.searchParams
   const supabase = await createClient()
 
@@ -103,9 +103,6 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
   const orders = currentCustomer.orders || []
   orders.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 
-  const activeOrders = orders.filter((o: any) => ['pending', 'processing'].includes(o.status?.toLowerCase()))
-  const pastOrders = orders.filter((o: any) => ['completed', 'cancelled'].includes(o.status?.toLowerCase()))
-
   // Calculate stats
   const totalOrdersCount = orders.length
   const totalSpent = orders.reduce((sum: number, o: any) => sum + Number(o.total_amount), 0)
@@ -124,7 +121,7 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
         </div>
         <div className="order-actions">
           <span className={`order-status ${statusClass}`}>
-            {order.status || 'Pending'}
+            {order.status?.toLowerCase() === 'completed' ? 'Placed' : 'Not Placed'}
           </span>
           <Link href={`/account/orders/${order.id}`} className="account-link">
             View Invoice
@@ -138,6 +135,12 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
     <div className="account-container">
       <div className="account-max-width">
         
+        {searchParams.message && (
+          <div style={{ backgroundColor: '#ecfdf5', color: '#065f46', padding: '15px', borderRadius: '8px', marginBottom: '20px', border: '1px solid #a7f3d0' }}>
+            {searchParams.message}
+          </div>
+        )}
+
         {/* Header Section */}
         <div className="account-header">
           <div className="account-header-info">
@@ -156,23 +159,14 @@ export default async function AccountDashboard(props: { searchParams: Promise<{ 
           {/* Main Content */}
           <div className="account-main">
             <div className="account-section">
-              <h2>Active Orders</h2>
-              {activeOrders.length > 0 ? (
-                activeOrders.map((order: any) => <OrderCard key={order.id} order={order} />)
+              <h2>Your Orders</h2>
+              {orders.length > 0 ? (
+                orders.map((order: any) => <OrderCard key={order.id} order={order} />)
               ) : (
                 <div className="account-empty">
-                  <p>You have no active orders.</p>
+                  <p>You have no orders yet.</p>
                   <Link href="/shop" className="account-link">Start Shopping</Link>
                 </div>
-              )}
-            </div>
-
-            <div className="account-section" style={{ marginTop: '2rem' }}>
-              <h2>Past Orders</h2>
-              {pastOrders.length > 0 ? (
-                pastOrders.map((order: any) => <OrderCard key={order.id} order={order} />)
-              ) : (
-                <p style={{ color: '#6b7280', fontStyle: 'italic' }}>No past orders yet.</p>
               )}
             </div>
           </div>
