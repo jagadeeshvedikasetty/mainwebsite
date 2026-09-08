@@ -66,7 +66,6 @@ export async function placeOrder(formData: FormData) {
   }
 
   // 3. Extract form data
-  const shippingAddress = formData.get('address') as string
   const cartDataStr = formData.get('cartData') as string
   if (!cartDataStr) {
     return { success: false, message: 'Your cart is empty' }
@@ -88,7 +87,7 @@ export async function placeOrder(formData: FormData) {
       customer_id: customer.id,
       total_amount: totalAmount,
       status: 'Pending',
-      shipping_address: shippingAddress
+      shipping_address: 'Testing Quick Order'
     })
     .select()
     .single()

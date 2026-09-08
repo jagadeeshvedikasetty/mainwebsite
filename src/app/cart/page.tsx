@@ -3,11 +3,41 @@
 import { useCartStore } from '../../store/cartStore';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { placeOrder } from './actions';
 
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, getTotalPrice, clearCart } = useCartStore();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showAnimation, setShowAnimation] = useState(false);
+  const router = useRouter();
 
   const total = getTotalPrice();
+
+  const handleCheckout = async () => {
+    setIsSubmitting(true);
+    const formData = new FormData();
+    formData.append('cartData', JSON.stringify(items));
+    
+    try {
+      const result = await placeOrder(formData);
+      if (result.success) {
+        setShowAnimation(true);
+        setTimeout(() => {
+          clearCart();
+          router.push('/account?message=Order placed successfully!');
+        }, 2500); // Wait for animation
+      } else {
+        alert(result.message || 'Failed to place order');
+        setIsSubmitting(false);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('An unexpected error occurred.');
+      setIsSubmitting(false);
+    }
+  };
 
   if (items.length === 0) {
     return (
@@ -108,12 +138,42 @@ export default function CartPage() {
               <span style={{ color: 'var(--primary-color)' }}>₹{total.toFixed(2)}</span>
             </div>
 
-            <Link href="/checkout" style={{ display: 'block', textAlign: 'center', width: '100%', padding: '15px', backgroundColor: 'var(--secondary-color)', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 'bold', fontSize: '1.1rem', marginTop: '30px', cursor: 'pointer', transition: 'opacity 0.3s', textDecoration: 'none' }}>
-              Proceed to Checkout
-            </Link>
+            <button 
+              onClick={handleCheckout}
+              disabled={isSubmitting || showAnimation}
+              style={{ display: 'block', textAlign: 'center', width: '100%', padding: '15px', backgroundColor: 'var(--secondary-color)', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 'bold', fontSize: '1.1rem', marginTop: '30px', cursor: (isSubmitting || showAnimation) ? 'not-allowed' : 'pointer', transition: 'opacity 0.3s', textDecoration: 'none' }}
+            >
+              {isSubmitting ? 'Placing Order...' : 'Proceed to Checkout'}
+            </button>
           </div>
         </div>
       </div>
+      
+      {/* Success Animation Overlay */}
+      {showAnimation && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(255,255,255,0.95)', zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', animation: 'scaleIn 0.5s ease-out' }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ animation: 'drawCheck 0.5s ease-out 0.3s both' }}>
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <h2 style={{ fontSize: '2rem', color: '#10b981', fontWeight: 'bold', fontFamily: 'inherit', animation: 'fadeInUp 0.5s ease-out 0.5s both' }}>Order Placed Successfully!</h2>
+          <style dangerouslySetInnerHTML={{__html: `
+            @keyframes scaleIn {
+              0% { transform: scale(0); }
+              100% { transform: scale(1); }
+            }
+            @keyframes drawCheck {
+              0% { stroke-dasharray: 50; stroke-dashoffset: 50; }
+              100% { stroke-dasharray: 50; stroke-dashoffset: 0; }
+            }
+            @keyframes fadeInUp {
+              0% { opacity: 0; transform: translateY(20px); }
+              100% { opacity: 1; transform: translateY(0); }
+            }
+          `}} />
+        </div>
+      )}
     </main>
   );
 }
