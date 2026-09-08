@@ -108,9 +108,9 @@ export default function CartPage() {
               <span style={{ color: 'var(--primary-color)' }}>₹{total.toFixed(2)}</span>
             </div>
 
-            <button style={{ width: '100%', padding: '15px', backgroundColor: 'var(--secondary-color)', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 'bold', fontSize: '1.1rem', marginTop: '30px', cursor: 'pointer', transition: 'opacity 0.3s' }}>
+            <Link href="/checkout" style={{ display: 'block', textAlign: 'center', width: '100%', padding: '15px', backgroundColor: 'var(--secondary-color)', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 'bold', fontSize: '1.1rem', marginTop: '30px', cursor: 'pointer', transition: 'opacity 0.3s', textDecoration: 'none' }}>
               Proceed to Checkout
-            </button>
+            </Link>
           </div>
         </div>
       </div>
