@@ -16,15 +16,29 @@ export default async function OrderInvoicePage({ params }: { params: { id: strin
     .select(`
       *,
       customers (*),
-      order_items (
-        *,
-        products (name, price)
-      )
+      order_items (*)
     `)
     .eq('id', params.id)
     .single()
     
-  if (error || !order) return <div className="p-12 text-center text-red-500">Order not found.</div>
+  if (error || !order) {
+    console.error('Invoice fetch error:', error)
+    return <div className="p-12 text-center text-red-500">Order not found.</div>
+  }
+
+  // Fetch product names manually because foreign key might be missing
+  if (order.order_items && order.order_items.length > 0) {
+    const productIds = order.order_items.map((i: any) => i.product_id)
+    const { data: products } = await supabaseAdmin
+      .from('products')
+      .select('id, name')
+      .in('id', productIds)
+      
+    order.order_items.forEach((item: any) => {
+      const prod = products?.find((p: any) => p.id === item.product_id)
+      item.products = { name: prod?.name || 'Unknown Product' }
+    })
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 print:bg-white print:py-0">
