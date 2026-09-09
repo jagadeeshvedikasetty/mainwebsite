@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ProductGrid({ products }: { products: any[] }) {
   return (
@@ -18,8 +19,9 @@ export default function ProductGrid({ products }: { products: any[] }) {
 
         return (
           <div key={product.id} className="product-card animate-fade-in" style={{ animationDelay: delay }}>
-            <div 
-              className="product-image-container"
+            <Link 
+              href={`/shop/${product.id}`}
+              className="product-image-container block"
               onMouseEnter={(e) => {
                 const video = e.currentTarget.querySelector('video');
                 if (video) video.play();
@@ -53,10 +55,12 @@ export default function ProductGrid({ products }: { products: any[] }) {
               )}
               
               <div className="quick-shop-btn">Quick Shop</div>
-            </div>
+            </Link>
             <div className="product-info">
               <div className="product-category">{product.category || "General"}</div>
-              <h3 className="product-title font-traditional">{product.name}</h3>
+              <Link href={`/shop/${product.id}`}>
+                <h3 className="product-title font-traditional hover:text-orange-600 transition-colors">{product.name}</h3>
+              </Link>
               <div className="product-price">{lowestPrice}</div>
             </div>
           </div>

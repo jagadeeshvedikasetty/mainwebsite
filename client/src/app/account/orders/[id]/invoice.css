@@ -1,0 +1,231 @@
+.invoice-wrapper {
+  background-color: #f9fafb;
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  position: relative;
+  z-index: 100; /* Block out the global body background */
+}
+
+.invoice-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 3rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.invoice-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto 1.5rem auto;
+}
+
+.invoice-back-link {
+  color: #ea580c;
+  font-weight: 500;
+  text-decoration: none;
+}
+.invoice-back-link:hover {
+  color: #c2410c;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.invoice-header-left {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.invoice-logo-container {
+  width: 6rem;
+  height: 6rem;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #ffedd5;
+  flex-shrink: 0;
+}
+
+.invoice-brand-name {
+  font-size: 1.875rem;
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 700;
+  color: #ea580c;
+  margin-bottom: 0.25rem;
+}
+
+.invoice-brand-tagline {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.invoice-brand-address {
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.invoice-header-right {
+  text-align: right;
+}
+
+.invoice-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #111827;
+}
+
+.invoice-number {
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.invoice-meta {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-top: 1rem;
+}
+
+.invoice-status {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+  text-transform: capitalize;
+  margin-top: 0.25rem;
+}
+
+.invoice-billed-to {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.invoice-billed-heading {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.invoice-customer-name {
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.invoice-customer-detail {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.25rem;
+}
+
+.invoice-customer-address {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-top: 0.5rem;
+  white-space: pre-line;
+}
+
+.invoice-table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.invoice-table th {
+  padding: 0.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #111827;
+  border-bottom: 2px solid #111827;
+}
+
+.invoice-table td {
+  padding: 1rem 0;
+  font-size: 0.875rem;
+  color: #4b5563;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.invoice-table th.center, .invoice-table td.center {
+  text-align: center;
+}
+
+.invoice-table th.right, .invoice-table td.right {
+  text-align: right;
+}
+
+.invoice-table td.total-col {
+  font-weight: 500;
+  color: #111827;
+}
+
+.invoice-totals {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.invoice-totals-box {
+  width: 100%;
+  max-width: 300px;
+}
+
+.invoice-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.75rem;
+}
+
+.invoice-total-final {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #111827;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.invoice-footer {
+  margin-top: 4rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 2rem;
+}
+
+@media print {
+  .invoice-wrapper {
+    padding: 0;
+    background: white;
+  }
+  .invoice-container {
+    padding: 0;
+    border: none;
+    box-shadow: none;
+  }
+  .print-hidden {
+    display: none !important;
+  }
+}
