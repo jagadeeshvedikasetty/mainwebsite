@@ -2,6 +2,29 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import Razorpay from 'razorpay'
+import crypto from 'crypto'
+
+export async function createRazorpayOrder(amountInRupees: number) {
+  const razorpay = new Razorpay({
+    key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
+    key_secret: process.env.RAZORPAY_KEY_SECRET!,
+  });
+
+  const options = {
+    amount: Math.round(amountInRupees * 100), // convert to paise
+    currency: "INR",
+    receipt: `receipt_${Date.now()}`
+  };
+
+  try {
+    const order = await razorpay.orders.create(options);
+    return { success: true, order };
+  } catch (error) {
+    console.error('Error creating razorpay order:', error);
+    return { success: false, message: "Error creating Razorpay order" };
+  }
+}
 
 export async function placeOrder(formData: FormData) {
   const supabase = await createClient()
@@ -71,6 +94,25 @@ export async function placeOrder(formData: FormData) {
     return { success: false, message: 'Your cart is empty' }
   }
 
+  const razorpay_order_id = formData.get('razorpay_order_id') as string;
+  const razorpay_payment_id = formData.get('razorpay_payment_id') as string;
+  const razorpay_signature = formData.get('razorpay_signature') as string;
+
+  if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+    return { success: false, message: 'Incomplete payment information' };
+  }
+
+  // Verify Signature
+  const body = razorpay_order_id + "|" + razorpay_payment_id;
+  const expectedSignature = crypto
+    .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
+    .update(body.toString())
+    .digest('hex');
+
+  if (expectedSignature !== razorpay_signature) {
+    return { success: false, message: 'Invalid payment signature' };
+  }
+
   const items = JSON.parse(cartDataStr)
   const totalAmount = items.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0)
 
@@ -86,8 +128,8 @@ export async function placeOrder(formData: FormData) {
     .insert({
       customer_id: customer.id,
       total_amount: totalAmount,
-      status: 'Pending',
-      shipping_address: 'Testing Quick Order'
+      status: 'Paid',
+      shipping_address: 'Address from Checkout' // Future enhancement: pull from formData
     })
     .select()
     .single()

@@ -7,6 +7,7 @@ import PromoBar from "../components/PromoBar";
 import BottomNav from "../components/BottomNav";
 import FloatingActions from "../components/FloatingActions";
 import ThemeProvider from "../components/ThemeProvider";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Janani Home Foods - Authentic Indian Sweets & Pickles",
@@ -60,6 +61,7 @@ export default function RootLayout({
         </footer>
         </ThemeProvider>
         <FloatingActions />
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       </body>
     </html>
   );

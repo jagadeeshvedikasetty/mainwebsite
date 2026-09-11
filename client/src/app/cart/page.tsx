@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { placeOrder } from './actions';
+import { placeOrder, createRazorpayOrder } from './actions';
 
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, getTotalPrice, clearCart } = useCartStore();
@@ -17,21 +17,74 @@ export default function CartPage() {
 
   const handleCheckout = async () => {
     setIsSubmitting(true);
-    const formData = new FormData();
-    formData.append('cartData', JSON.stringify(items));
     
     try {
-      const result = await placeOrder(formData);
-      if (result.success) {
-        setShowAnimation(true);
-        setTimeout(() => {
-          clearCart();
-          router.push('/account?message=Order placed successfully!');
-        }, 2500); // Wait for animation
-      } else {
-        alert(result.message || 'Failed to place order');
+      // 1. Calculate total
+      const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+      // 2. Create Razorpay order via Server Action
+      const { success, order } = await createRazorpayOrder(totalAmount);
+      if (!success) {
+        alert("Could not initialize payment");
         setIsSubmitting(false);
+        return;
       }
+
+      // 3. Configure Razorpay Window
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
+        amount: order.amount, 
+        currency: order.currency,
+        name: "Janani Home Foods",
+        description: "Order Payment",
+        order_id: order.id, 
+        handler: async function (response: any) {
+          // 4. On Payment Success, call your existing placeOrder action
+          const formData = new FormData();
+          formData.append('cartData', JSON.stringify(items));
+          formData.append('razorpay_payment_id', response.razorpay_payment_id);
+          formData.append('razorpay_order_id', response.razorpay_order_id);
+          formData.append('razorpay_signature', response.razorpay_signature);
+
+          try {
+            const result = await placeOrder(formData);
+            if (result.success) {
+              setShowAnimation(true);
+              setTimeout(() => {
+                clearCart();
+                router.push('/account?message=Order placed successfully!');
+              }, 2500);
+            } else {
+              alert(result.message || 'Failed to place order');
+              setIsSubmitting(false);
+            }
+          } catch (err) {
+            console.error(err);
+            alert('An unexpected error occurred during order placement.');
+            setIsSubmitting(false);
+          }
+        },
+        prefill: {
+          name: "Customer Name", // Would pull from session in real app
+          email: "customer@example.com",
+        },
+        theme: {
+          color: "#f97316", // match UI orange
+        },
+        modal: {
+          ondismiss: function() {
+            setIsSubmitting(false);
+          }
+        }
+      };
+
+      // @ts-ignore
+      const rzp1 = new window.Razorpay(options);
+      rzp1.on('payment.failed', function (response: any){
+        alert("Payment failed: " + response.error.description);
+        setIsSubmitting(false);
+      });
+      rzp1.open();
     } catch (err) {
       console.error(err);
       alert('An unexpected error occurred.');
