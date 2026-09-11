@@ -6,9 +6,14 @@ import Razorpay from 'razorpay'
 import crypto from 'crypto'
 
 export async function createRazorpayOrder(amountInRupees: number) {
+  if (!process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    console.error("Razorpay keys are missing from environment variables.");
+    return { success: false, message: "Server configuration error: Missing Payment Gateway keys." };
+  }
+
   const razorpay = new Razorpay({
-    key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
-    key_secret: process.env.RAZORPAY_KEY_SECRET!,
+    key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
   });
 
   const options = {
@@ -103,9 +108,13 @@ export async function placeOrder(formData: FormData) {
   }
 
   // Verify Signature
+  if (!process.env.RAZORPAY_KEY_SECRET) {
+    return { success: false, message: 'Server configuration error: Missing Payment Gateway keys.' };
+  }
+
   const body = razorpay_order_id + "|" + razorpay_payment_id;
   const expectedSignature = crypto
-    .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
+    .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
     .update(body.toString())
     .digest('hex');
 
