@@ -24,7 +24,7 @@ export default function CartPage() {
 
       // 2. Create Razorpay order via Server Action
       const { success, order } = await createRazorpayOrder(totalAmount);
-      if (!success) {
+      if (!success || !order) {
         alert("Could not initialize payment");
         setIsSubmitting(false);
         return;
