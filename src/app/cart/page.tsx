@@ -3,7 +3,7 @@
 import { useCartStore } from '../../store/cartStore';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { placeOrder, createRazorpayOrder } from './actions';
 
@@ -11,7 +11,12 @@ export default function CartPage() {
   const { items, removeFromCart, updateQuantity, getTotalPrice, clearCart } = useCartStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const total = getTotalPrice();
 
@@ -91,6 +96,10 @@ export default function CartPage() {
       setIsSubmitting(false);
     }
   };
+
+  if (!isMounted) {
+    return null; // Prevent hydration mismatch
+  }
 
   if (items.length === 0) {
     return (
